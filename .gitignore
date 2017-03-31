@@ -1,4 +1,9 @@
-bin
-tmp
-out.log
+VB-CODE/bin
+VB-CODE/tmp
+VB-CODE/out.log
+VB-CODE/.DS_Store
+C#-CODE/bin
+C#-CODE/tmp
+C#-CODE/out.log
+C#-CODE/.DS_Store
 .DS_Store
