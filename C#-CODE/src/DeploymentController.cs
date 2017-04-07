@@ -11,8 +11,8 @@ using SwinGameSDK;
 /// The DeploymentController controls the players actions
 /// during the deployment phase.
 /// </summary>
-static class DeploymentController
-{
+static class DeploymentController {
+
 	private const int SHIPS_TOP = 98;
 	private const int SHIPS_LEFT = 20;
 	private const int SHIPS_HEIGHT = 90;
@@ -45,8 +45,8 @@ static class DeploymentController
 	/// of the ships to add, randomising deployment, end then ending
 	/// deployment
 	/// </remarks>
-	public static void HandleDeploymentInput()
-	{
+	public static void HandleDeploymentInput() {
+
 		if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE)) {
 			GameController.AddNewState(GameState.ViewingGameMenu);
 		}
@@ -91,8 +91,8 @@ static class DeploymentController
 	/// If the click is in the grid it deploys to the selected location
 	/// with the indicated direction
 	/// </remarks>
-	private static void DoDeployClick()
-	{
+	private static void DoDeployClick() {
+
 		Point2D mouse = default(Point2D);
 
 		mouse = SwinGame.MousePosition();
@@ -120,8 +120,8 @@ static class DeploymentController
 	/// Draws the deployment screen showing the field and the ships
 	/// that the player can deploy.
 	/// </summary>
-	public static void DrawDeployment()
-	{
+	public static void DrawDeployment() {
+
 		UtilityFunctions.DrawField(GameController.HumanPlayer.PlayerGrid, GameController.HumanPlayer, true);
 
 		//Draw the Left/Right and Up/Down buttons
@@ -138,7 +138,7 @@ static class DeploymentController
 		//DrawShips
 		foreach (ShipName sn in Enum.GetValues(typeof(ShipName))) {
 			int i = 0;
-			i = ((int) sn) - 1; 
+			i = ((int) sn) - 1;
 			if (i >= 0) {
 				if (sn == _selectedShip) {
 					SwinGame.DrawBitmap(GameResources.GameImage("SelectedShip"), SHIPS_LEFT, SHIPS_TOP + i * SHIPS_HEIGHT);
@@ -168,11 +168,11 @@ static class DeploymentController
 	/// Gets the ship that the mouse is currently over in the selection panel.
 	/// </summary>
 	/// <returns>The ship selected or none</returns>
-	private static ShipName GetShipMouseIsOver()
-	{
+	private static ShipName GetShipMouseIsOver() {
+		
 		foreach (ShipName sn in Enum.GetValues(typeof(ShipName))) {
 			int i = 0;
-			i = ((int) sn) - 1; 
+			i = ((int) sn) - 1;
 
 			if (UtilityFunctions.IsMouseInRectangle(SHIPS_LEFT, SHIPS_TOP + i * SHIPS_HEIGHT, SHIPS_WIDTH, SHIPS_HEIGHT)) {
 				return sn;

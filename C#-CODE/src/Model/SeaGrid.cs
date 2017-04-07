@@ -10,11 +10,10 @@ using System.Diagnostics;
 /// </summary>
 /// <remarks>
 /// The grid is viewable via the ISeaGrid interface as a read only
-/// grid. This can be used in conjuncture with the SeaGridAdapter to 
+/// grid. This can be used in conjuncture with the SeaGridAdapter to
 /// mask the position of the ships.
 /// </remarks>
-public class SeaGrid : ISeaGrid
-{
+public class SeaGrid : ISeaGrid {
 
 	private const int _WIDTH = 10;
 
@@ -81,8 +80,8 @@ public class SeaGrid : ISeaGrid
 	/// <summary>
 	/// SeaGrid constructor, a seagrid has a number of tiles stored in an array
 	/// </summary>
-	public SeaGrid(Dictionary<ShipName, Ship> ships)
-	{
+	public SeaGrid(Dictionary<ShipName, Ship> ships) {
+
 		_GameTiles = new Tile[Width, Height];
 		//fill array with empty Tiles
 		int i = 0;
@@ -102,8 +101,8 @@ public class SeaGrid : ISeaGrid
 	/// <param name="col">the column selected</param>
 	/// <param name="ship">the ship selected</param>
 	/// <param name="direction">the direction the ship is going</param>
-	public void MoveShip(int row, int col, ShipName ship, Direction direction)
-	{
+	public void MoveShip(int row, int col, ShipName ship, Direction direction) {
+
 		Ship newShip = _Ships[ship];
 		newShip.Remove();
 		AddShip(row, col, direction, newShip);
@@ -116,8 +115,8 @@ public class SeaGrid : ISeaGrid
 	/// <param name="col">col coordinate</param>
 	/// <param name="direction">direction of ship</param>
 	/// <param name="newShip">the ship</param>
-	private void AddShip(int row, int col, Direction direction, Ship newShip)
-	{
+	private void AddShip(int row, int col, Direction direction, Ship newShip) {
+
 		try {
 			int size = newShip.Size;
 			int currentRow = row;
@@ -166,8 +165,8 @@ public class SeaGrid : ISeaGrid
 	/// <param name="row">the row at which is being shot</param>
 	/// <param name="col">the cloumn at which is being shot</param>
 	/// <returns>An attackresult (hit, miss, sunk, shotalready)</returns>
-	public AttackResult HitTile(int row, int col)
-	{
+	public AttackResult HitTile(int row, int col) {
+		
 		try {
 			//tile is already hit
 			if (_GameTiles[row, col].Shot) {

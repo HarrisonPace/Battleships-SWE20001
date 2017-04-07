@@ -7,19 +7,18 @@ using System.Data;
 using System.Diagnostics;
 using SwinGameSDK;
 
-public static class GameResources
-{
+public static class GameResources {
 
-	private static void LoadFonts()
-	{
+	private static void LoadFonts() {
+
 		NewFont("ArialLarge", "arial.ttf", 80);
 		NewFont("Courier", "cour.ttf", 14);
 		NewFont("CourierSmall", "cour.ttf", 8);
 		NewFont("Menu", "ffaccess.ttf", 8);
 	}
 
-	private static void LoadImages()
-	{
+	private static void LoadImages() {
+
 		//Backgrounds
 		NewImage("Menu", "main_page.jpg");
 		NewImage("Discovery", "discover.jpg");
@@ -45,8 +44,8 @@ public static class GameResources
 
 	}
 
-	private static void LoadSounds()
-	{
+	private static void LoadSounds() {
+
 		NewSound("Error", "error.wav");
 		NewSound("Hit", "hit.wav");
 		NewSound("Sink", "sink.wav");
@@ -56,8 +55,8 @@ public static class GameResources
 		NewSound("Lose", "lose.wav");
 	}
 
-	private static void LoadMusic()
-	{
+	private static void LoadMusic() {
+
 		NewMusic("Background", "horrordrone.mp3");
 	}
 
@@ -67,8 +66,8 @@ public static class GameResources
 	/// <param name="font">Name of Font</param>
 	/// <returns>The Font Loaded with this Name</returns>
 
-	public static Font GameFont(string font)
-	{
+	public static Font GameFont(string font) {
+
 		return _Fonts[font];
 	}
 
@@ -78,8 +77,8 @@ public static class GameResources
 	/// <param name="image">Name of image</param>
 	/// <returns>The image loaded with this name</returns>
 
-	public static Bitmap GameImage(string image)
-	{
+	public static Bitmap GameImage(string image) {
+
 		return _Images[image];
 	}
 
@@ -89,8 +88,8 @@ public static class GameResources
 	/// <param name="sound">Name of sound</param>
 	/// <returns>The sound with this name</returns>
 
-	public static SoundEffect GameSound(string sound)
-	{
+	public static SoundEffect GameSound(string sound) {
+
 		return _Sounds[sound];
 	}
 
@@ -100,8 +99,8 @@ public static class GameResources
 	/// <param name="music">Name of music</param>
 	/// <returns>The music with this name</returns>
 
-	public static Music GameMusic(string music)
-	{
+	public static Music GameMusic(string music) {
+
 		return _Music[music];
 	}
 
@@ -122,8 +121,8 @@ public static class GameResources
 	/// Sounds, Music.
 	/// </summary>
 
-	public static void LoadResources()
-	{
+	public static void LoadResources() {
+
 		int width = 0;
 		int height = 0;
 
@@ -156,8 +155,8 @@ public static class GameResources
 		EndLoadingScreen(width, height);
 	}
 
-	private static void ShowLoadingScreen()
-	{
+	private static void ShowLoadingScreen() {
+
 		_Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack.png", ResourceKind.BitmapResource));
 		SwinGame.DrawBitmap(_Background, 0, 0);
 		SwinGame.RefreshScreen();
@@ -173,8 +172,8 @@ public static class GameResources
 		PlaySwinGameIntro();
 	}
 
-	private static void PlaySwinGameIntro()
-	{
+	private static void PlaySwinGameIntro() {
+
 		const int ANI_X = 143;
 		const int ANI_Y = 134;
 		const int ANI_W = 546;
@@ -198,8 +197,8 @@ public static class GameResources
 
 	}
 
-	private static void ShowMessage(string message, int number)
-	{
+	private static void ShowMessage(string message, int number) {
+
 		const int TX = 310;
 		const int TY = 493;
 		const int TW = 200;
@@ -220,8 +219,8 @@ public static class GameResources
 		SwinGame.ProcessEvents();
 	}
 
-	private static void EndLoadingScreen(int width, int height)
-	{
+	private static void EndLoadingScreen(int width, int height) {
+
 		SwinGame.ProcessEvents();
 		SwinGame.Delay(500);
 		SwinGame.ClearScreen();
@@ -235,66 +234,66 @@ public static class GameResources
 		SwinGame.ChangeScreenSize(width, height);
 	}
 
-	private static void NewFont(string fontName, string filename, int size)
-	{
+	private static void NewFont(string fontName, string filename, int size) {
+
 		_Fonts.Add(fontName, SwinGame.LoadFont(SwinGame.PathToResource(filename, ResourceKind.FontResource), size));
 	}
 
-	private static void NewImage(string imageName, string filename)
-	{
+	private static void NewImage(string imageName, string filename) {
+
 		_Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(filename, ResourceKind.BitmapResource)));
 	}
 
-	private static void NewTransparentColorImage(string imageName, string fileName, Color transColor)
-	{
+	private static void NewTransparentColorImage(string imageName, string fileName, Color transColor) {
+
 		_Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(fileName, ResourceKind.BitmapResource), true, transColor));
 	}
 
-	private static void NewTransparentColourImage(string imageName, string fileName, Color transColor)
-	{
+	private static void NewTransparentColourImage(string imageName, string fileName, Color transColor) {
+
 		NewTransparentColorImage(imageName, fileName, transColor);
 	}
 
-	private static void NewSound(string soundName, string filename)
-	{
+	private static void NewSound(string soundName, string filename) {
+
 		_Sounds.Add(soundName, Audio.LoadSoundEffect(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
 	}
 
-	private static void NewMusic(string musicName, string filename)
-	{
+	private static void NewMusic(string musicName, string filename) {
+
 		_Music.Add(musicName, Audio.LoadMusic(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
 	}
 
-	private static void FreeFonts()
-	{
+	private static void FreeFonts() {
+
 		foreach (Font obj in _Fonts.Values) {
 			SwinGame.FreeFont(obj);
 		}
 	}
 
-	private static void FreeImages()
-	{
+	private static void FreeImages() {
+
 		foreach (Bitmap obj in _Images.Values) {
 			SwinGame.FreeBitmap(obj);
 		}
 	}
 
-	private static void FreeSounds()
-	{
+	private static void FreeSounds() {
+
 		foreach (SoundEffect obj in _Sounds.Values) {
 			Audio.FreeSoundEffect(obj);
 		}
 	}
 
-	private static void FreeMusic()
-	{
+	private static void FreeMusic() {
+
 		foreach (Music obj in _Music.Values) {
 			Audio.FreeMusic(obj);
 		}
 	}
 
-	public static void FreeResources()
-	{
+	public static void FreeResources() {
+		
 		FreeFonts();
 		FreeImages();
 		FreeMusic();

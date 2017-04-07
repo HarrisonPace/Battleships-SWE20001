@@ -8,8 +8,8 @@ using System.Diagnostics;
 /// <summary>
 /// The result of an attack.
 /// </summary>
-public enum ResultOfAttack
-{
+public enum ResultOfAttack {
+	
 	/// <summary>
 	/// The player hit something
 	/// </summary>

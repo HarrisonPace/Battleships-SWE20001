@@ -9,8 +9,7 @@ using System.Diagnostics;
 /// Player has its own _PlayerGrid, and can see an _EnemyGrid, it can also check if
 /// all ships are deployed and if all ships are detroyed. A Player can also attach.
 /// </summary>
-public class Player : IEnumerable<Ship>
-{
+public class Player : IEnumerable<Ship> {
 
 	protected static Random _Random = new Random();
 	private Dictionary<ShipName, Ship> _Ships = new Dictionary<ShipName, Ship>();
@@ -40,8 +39,8 @@ public class Player : IEnumerable<Ship>
 		set { _enemyGrid = value; }
 	}
 
-	public Player(BattleShipsGame controller)
-	{
+	public Player(BattleShipsGame controller) {
+
 		_game = controller;
 		_playerGrid = new SeaGrid(_Ships);
 		//for each ship add the ships name so the seagrid knows about them
@@ -131,8 +130,8 @@ public class Player : IEnumerable<Ship>
 	/// has.
 	/// </summary>
 	/// <returns>A Ship enumerator</returns>
-	public IEnumerator<Ship> GetShipEnumerator()
-	{
+	public IEnumerator<Ship> GetShipEnumerator() {
+
 		Ship[] result = new Ship[_Ships.Values.Count + 1];
 		_Ships.Values.CopyTo(result, 0);
 		List<Ship> lst = new List<Ship>();
@@ -150,8 +149,8 @@ public class Player : IEnumerable<Ship>
 	/// has.
 	/// </summary>
 	/// <returns>A Ship enumerator</returns>
-	public IEnumerator GetEnumerator()
-	{
+	public IEnumerator GetEnumerator() {
+
 		Ship[] result = new Ship[_Ships.Values.Count + 1];
 		_Ships.Values.CopyTo(result, 0);
 		List<Ship> lst = new List<Ship>();
@@ -163,8 +162,8 @@ public class Player : IEnumerable<Ship>
 	/// <summary>
 	/// Vitual Attack allows the player to shoot
 	/// </summary>
-	public virtual AttackResult Attack()
-	{
+	public virtual AttackResult Attack() {
+
 		//human does nothing here...
 		return null;
 	}
@@ -175,8 +174,8 @@ public class Player : IEnumerable<Ship>
 	/// <param name="row">the row to attack</param>
 	/// <param name="col">the column to attack</param>
 	/// <returns>the result of the attack</returns>
-	internal AttackResult Shoot(int row, int col)
-	{
+	internal AttackResult Shoot(int row, int col) {
+
 		_shots += 1;
 		AttackResult result = default(AttackResult);
 		result = EnemyGrid.HitTile(row, col);
@@ -194,8 +193,8 @@ public class Player : IEnumerable<Ship>
 		return result;
 	}
 
-	public virtual void RandomizeDeployment()
-	{
+	public virtual void RandomizeDeployment() {
+		
 		bool placementSuccessful = false;
 		Direction heading = default(Direction);
 

@@ -10,15 +10,15 @@ using System.Diagnostics;
 /// The AIMediumPlayer is a type of AIPlayer where it will try and destroy a ship
 /// if it has found a ship
 /// </summary>
-public class AIMediumPlayer : AIPlayer
-{
+public class AIMediumPlayer : AIPlayer {
+
 	/// <summary>
 	/// Private enumarator for AI states. currently there are two states,
 	/// the AI can be searching for a ship, or if it has found a ship it will
 	/// target the same ship
 	/// </summary>
-	private enum AIStates
-	{
+	private enum AIStates {
+
 		Searching,
 		TargetingShip
 	}
@@ -26,19 +26,17 @@ public class AIMediumPlayer : AIPlayer
 	private AIStates _CurrentState = AIStates.Searching;
 
 	private Stack<Location> _Targets = new Stack<Location>();
-	public AIMediumPlayer(BattleShipsGame controller) : base(controller)
-	{
-	}
+	public AIMediumPlayer(BattleShipsGame controller) : base(controller) {}
 
 	/// <summary>
 	/// GenerateCoordinates should generate random shooting coordinates
-	/// only when it has not found a ship, or has destroyed a ship and 
+	/// only when it has not found a ship, or has destroyed a ship and
 	/// needs new shooting coordinates
 	/// </summary>
 	/// <param name="row">the generated row</param>
 	/// <param name="column">the generated column</param>
-	protected override void GenerateCoords(ref int row, ref int column)
-	{
+	protected override void GenerateCoords(ref int row, ref int column) {
+
 		do {
 			//check which state the AI is in and uppon that choose which coordinate generation
 			//method will be used.
@@ -62,8 +60,8 @@ public class AIMediumPlayer : AIPlayer
 	/// </summary>
 	/// <param name="row">row generated around the hit tile</param>
 	/// <param name="column">column generated around the hit tile</param>
-	private void TargetCoords(ref int row, ref int column)
-	{
+	private void TargetCoords(ref int row, ref int column) {
+
 		Location l = _Targets.Pop();
 
 		if ((_Targets.Count == 0))
@@ -77,8 +75,8 @@ public class AIMediumPlayer : AIPlayer
 	/// </summary>
 	/// <param name="row">the generated row</param>
 	/// <param name="column">the generated column</param>
-	private void SearchCoords(ref int row, ref int column)
-	{
+	private void SearchCoords(ref int row, ref int column) {
+
 		row = _Random.Next(0, EnemyGrid.Height);
 		column = _Random.Next(0, EnemyGrid.Width);
 	}
@@ -92,8 +90,8 @@ public class AIMediumPlayer : AIPlayer
 	/// <param name="col">the column it needs to process</param>
 	/// <param name="result">the result og the last shot (should be hit)</param>
 
-	protected override void ProcessShot(int row, int col, AttackResult result)
-	{
+	protected override void ProcessShot(int row, int col, AttackResult result) {
+
 		if (result.Value == ResultOfAttack.Hit) {
 			_CurrentState = AIStates.TargetingShip;
 			AddTarget(row - 1, col);
@@ -110,8 +108,7 @@ public class AIMediumPlayer : AIPlayer
 	/// </summary>
 	/// <param name="row">the row of the targets location</param>
 	/// <param name="column">the column of the targets location</param>
-	private void AddTarget(int row, int column)
-	{
+	private void AddTarget(int row, int column) {
 
 		if (row >= 0 && column >= 0 && row < EnemyGrid.Height && column < EnemyGrid.Width && EnemyGrid[row, column] == TileView.Sea) {
 			_Targets.Push(new Location(row, column));

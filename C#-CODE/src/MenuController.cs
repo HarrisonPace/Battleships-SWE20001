@@ -13,8 +13,8 @@ using SwinGameSDK;
 /// menu and the settings m,enu.
 /// </summary>
 
-static class MenuController
-{
+static class MenuController {
+
 
 	/// <summary>
 	/// The menu structure for the game.
@@ -73,16 +73,16 @@ static class MenuController
 	/// <summary>
 	/// Handles the processing of user input when the main menu is showing
 	/// </summary>
-	public static void HandleMainMenuInput()
-	{
+	public static void HandleMainMenuInput() {
+
 		HandleMenuInput(MAIN_MENU, 0, 0);
 	}
 
 	/// <summary>
 	/// Handles the processing of user input when the main menu is showing
 	/// </summary>
-	public static void HandleSetupMenuInput()
-	{
+	public static void HandleSetupMenuInput() {
+
 		bool handled = false;
 		handled = HandleMenuInput(SETUP_MENU, 1, 1);
 
@@ -97,8 +97,8 @@ static class MenuController
 	/// <remarks>
 	/// Player can return to the game, surrender, or quit entirely
 	/// </remarks>
-	public static void HandleGameMenuInput()
-	{
+	public static void HandleGameMenuInput() {
+
 		HandleMenuInput(GAME_MENU, 0, 0);
 	}
 
@@ -109,8 +109,8 @@ static class MenuController
 	/// <param name="level">the vertical level of the menu</param>
 	/// <param name="xOffset">the xoffset of the menu</param>
 	/// <returns>false if a clicked missed the buttons. This can be used to check prior menus.</returns>
-	private static bool HandleMenuInput(int menu, int level, int xOffset)
-	{
+	private static bool HandleMenuInput(int menu, int level, int xOffset) {
+
 		if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE)) {
 			GameController.EndCurrentState();
 			return true;
@@ -138,8 +138,8 @@ static class MenuController
 	/// <summary>
 	/// Draws the main menu to the screen.
 	/// </summary>
-	public static void DrawMainMenu()
-	{
+	public static void DrawMainMenu() {
+
 		//Clears the Screen to Black
 		//SwinGame.DrawText("Main Menu", Color.White, GameFont("ArialLarge"), 50, 50)
 
@@ -149,8 +149,8 @@ static class MenuController
 	/// <summary>
 	/// Draws the Game menu to the screen
 	/// </summary>
-	public static void DrawGameMenu()
-	{
+	public static void DrawGameMenu() {
+
 		//Clears the Screen to Black
 		//SwinGame.DrawText("Paused", Color.White, GameFont("ArialLarge"), 50, 50)
 
@@ -163,8 +163,8 @@ static class MenuController
 	/// <remarks>
 	/// Also shows the main menu
 	/// </remarks>
-	public static void DrawSettings()
-	{
+	public static void DrawSettings() {
+
 		//Clears the Screen to Black
 		//SwinGame.DrawText("Settings", Color.White, GameFont("ArialLarge"), 50, 50)
 
@@ -176,8 +176,8 @@ static class MenuController
 	/// Draw the buttons associated with a top level menu.
 	/// </summary>
 	/// <param name="menu">the index of the menu to draw</param>
-	private static void DrawButtons(int menu)
-	{
+	private static void DrawButtons(int menu) {
+
 		DrawButtons(menu, 0, 0);
 	}
 
@@ -192,8 +192,8 @@ static class MenuController
 	/// of the menu, to enable sub menus. The xOffset repositions the menu horizontally
 	/// to allow the submenus to be positioned correctly.
 	/// </remarks>
-	private static void DrawButtons(int menu, int level, int xOffset)
-	{
+	private static void DrawButtons(int menu, int level, int xOffset) {
+
 		int btnTop = 0;
 
 		btnTop = MENU_TOP - (MENU_GAP + BUTTON_HEIGHT) * level;
@@ -215,8 +215,8 @@ static class MenuController
 	/// </summary>
 	/// <param name="button">the index of the button to check</param>
 	/// <returns>true if the mouse is over that button</returns>
-	private static bool IsMouseOverButton(int button)
-	{
+	private static bool IsMouseOverButton(int button) {
+
 		return IsMouseOverMenu(button, 0, 0);
 	}
 
@@ -227,8 +227,8 @@ static class MenuController
 	/// <param name="level">the level of the menu</param>
 	/// <param name="xOffset">the xOffset of the menu</param>
 	/// <returns>true if the mouse is over the button</returns>
-	private static bool IsMouseOverMenu(int button, int level, int xOffset)
-	{
+	private static bool IsMouseOverMenu(int button, int level, int xOffset) {
+
 		int btnTop = MENU_TOP - (MENU_GAP + BUTTON_HEIGHT) * level;
 		int btnLeft = MENU_LEFT + BUTTON_SEP * (button + xOffset);
 
@@ -240,8 +240,8 @@ static class MenuController
 	/// </summary>
 	/// <param name="menu">the menu that has been clicked</param>
 	/// <param name="button">the index of the button that was clicked</param>
-	private static void PerformMenuAction(int menu, int button)
-	{
+	private static void PerformMenuAction(int menu, int button) {
+
 		switch (menu) {
 			case MAIN_MENU:
 				PerformMainMenuAction(button);
@@ -259,8 +259,8 @@ static class MenuController
 	/// The main menu was clicked, perform the button's action.
 	/// </summary>
 	/// <param name="button">the button pressed</param>
-	private static void PerformMainMenuAction(int button)
-	{
+	private static void PerformMainMenuAction(int button) {
+
 		switch (button) {
 			case MAIN_MENU_PLAY_BUTTON:
 				GameController.StartGame();
@@ -281,8 +281,8 @@ static class MenuController
 	/// The setup menu was clicked, perform the button's action.
 	/// </summary>
 	/// <param name="button">the button pressed</param>
-	private static void PerformSetupMenuAction(int button)
-	{
+	private static void PerformSetupMenuAction(int button) {
+
 		switch (button) {
 			case SETUP_MENU_EASY_BUTTON:
 				GameController.SetDifficulty(AIOption.Hard);
@@ -302,8 +302,8 @@ static class MenuController
 	/// The game menu was clicked, perform the button's action.
 	/// </summary>
 	/// <param name="button">the button pressed</param>
-	private static void PerformGameMenuAction(int button)
-	{
+	private static void PerformGameMenuAction(int button) {
+		
 		switch (button) {
 			case GAME_MENU_RETURN_BUTTON:
 				GameController.EndCurrentState();

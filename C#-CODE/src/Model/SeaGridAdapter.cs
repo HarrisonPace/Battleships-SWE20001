@@ -9,8 +9,7 @@ using System.Diagnostics;
 /// The SeaGridAdapter allows for the change in a sea grid view. Whenever a ship is
 /// presented it changes the view into a sea tile instead of a ship tile.
 /// </summary>
-public class SeaGridAdapter : ISeaGrid
-{
+public class SeaGridAdapter : ISeaGrid {
 
 
 	private SeaGrid _MyGrid;
@@ -18,8 +17,8 @@ public class SeaGridAdapter : ISeaGrid
 	/// Create the SeaGridAdapter, with the grid, and it will allow it to be changed
 	/// </summary>
 	/// <param name="grid">the grid that needs to be adapted</param>
-	public SeaGridAdapter(SeaGrid grid)
-	{
+	public SeaGridAdapter(SeaGrid grid) {
+
 		_MyGrid = grid;
 		_MyGrid.Changed += new EventHandler(MyGrid_Changed);
 	}
@@ -29,8 +28,8 @@ public class SeaGridAdapter : ISeaGrid
 	/// </summary>
 	/// <param name="sender">the object that caused the change</param>
 	/// <param name="e">what needs to be redrawn</param>
-	private void MyGrid_Changed(object sender, EventArgs e)
-	{
+	private void MyGrid_Changed(object sender, EventArgs e) {
+
 		if (Changed != null) {
 			Changed(this, e);
 		}
@@ -81,8 +80,8 @@ public class SeaGridAdapter : ISeaGrid
 	/// <param name="row">the row its hitting at</param>
 	/// <param name="col">the column its hitting at</param>
 	/// <returns>The result from hitting that tile</returns>
-	public AttackResult HitTile(int row, int col)
-	{
+	public AttackResult HitTile(int row, int col) {
+		
 		return _MyGrid.HitTile(row, col);
 	}
 	#endregion

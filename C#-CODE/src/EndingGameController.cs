@@ -12,14 +12,13 @@ using SwinGameSDK;
 /// of a game.
 /// </summary>
 
-static class EndingGameController
-{
+static class EndingGameController {
 
 	/// <summary>
 	/// Draw the end of the game screen, shows the win/lose state
 	/// </summary>
-	public static void DrawEndOfGame()
-	{
+	public static void DrawEndOfGame() {
+
 		UtilityFunctions.DrawField(GameController.ComputerPlayer.PlayerGrid, GameController.ComputerPlayer, true);
 		UtilityFunctions.DrawSmallField(GameController.HumanPlayer.PlayerGrid, GameController.HumanPlayer);
 
@@ -34,8 +33,8 @@ static class EndingGameController
 	/// Handle the input during the end of the game. Any interaction
 	/// will result in it reading in the highsSwinGame.
 	/// </summary>
-	public static void HandleEndOfGameInput()
-	{
+	public static void HandleEndOfGameInput() {
+		
 		if (SwinGame.MouseClicked(MouseButton.LeftButton) || SwinGame.KeyTyped(KeyCode.vk_RETURN) || SwinGame.KeyTyped(KeyCode.vk_ESCAPE)) {
 			HighScoreController.ReadHighScore(GameController.HumanPlayer.Score);
 			GameController.EndCurrentState();

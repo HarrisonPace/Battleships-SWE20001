@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 /// <summary>
-/// Tile knows its location on the grid, if it is a ship and if it has been 
+/// Tile knows its location on the grid, if it is a ship and if it has been
 /// shot before
 /// </summary>
-public class Tile
-{
+public class Tile {
+
 		//the row value of the tile
 	private readonly int _RowValue;
 		//the column value of the tile
@@ -71,8 +71,8 @@ public class Tile
 	/// <param name="row">the row on the grid</param>
 	/// <param name="col">the col on the grid</param>
 	/// <param name="ship">what ship it is</param>
-	public Tile(int row, int col, Ship ship)
-	{
+	public Tile(int row, int col, Ship ship) {
+
 		_RowValue = row;
 		_ColumnValue = col;
 		_Ship = ship;
@@ -81,8 +81,8 @@ public class Tile
 	/// <summary>
 	/// Clearship will remove the ship from the tile
 	/// </summary>
-	public void ClearShip()
-	{
+	public void ClearShip() {
+
 		_Ship = null;
 	}
 
@@ -117,8 +117,8 @@ public class Tile
 	/// Shoot allows a tile to be shot at, and if the tile has been hit before
 	/// it will give an error
 	/// </summary>
-	internal void Shoot()
-	{
+	internal void Shoot() {
+		
 		if ((false == Shot)) {
 			Shot = true;
 			if (_Ship != null) {

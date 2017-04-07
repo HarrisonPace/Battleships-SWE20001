@@ -10,8 +10,8 @@ using SwinGameSDK;
 /// This includes a number of utility methods for
 /// drawing and interacting with the Mouse.
 /// </summary>
-static class UtilityFunctions
-{
+static class UtilityFunctions {
+
 	public const int FIELD_TOP = 122;
 	public const int FIELD_LEFT = 349;
 	public const int FIELD_WIDTH = 418;
@@ -51,8 +51,8 @@ static class UtilityFunctions
 	/// <param name="w">the width to check</param>
 	/// <param name="h">the height to check</param>
 	/// <returns>true if the mouse is in the area checked</returns>
-	public static bool IsMouseInRectangle(int x, int y, int w, int h)
-	{
+	public static bool IsMouseInRectangle(int x, int y, int w, int h) {
+
 		Point2D mouse = default(Point2D);
 		bool result = false;
 
@@ -75,8 +75,8 @@ static class UtilityFunctions
 	/// <param name="grid">the grid to draw</param>
 	/// <param name="thePlayer">the players ships to show</param>
 	/// <param name="showShips">indicates if the ships should be shown</param>
-	public static void DrawField(ISeaGrid grid, Player thePlayer, bool showShips)
-	{
+	public static void DrawField(ISeaGrid grid, Player thePlayer, bool showShips) {
+
 		DrawCustomField(grid, thePlayer, false, showShips, FIELD_LEFT, FIELD_TOP, FIELD_WIDTH, FIELD_HEIGHT, CELL_WIDTH, CELL_HEIGHT,
 		CELL_GAP);
 	}
@@ -86,8 +86,8 @@ static class UtilityFunctions
 	/// </summary>
 	/// <param name="grid">the grid to show</param>
 	/// <param name="thePlayer">the player to show the ships of</param>
-	public static void DrawSmallField(ISeaGrid grid, Player thePlayer)
-	{
+	public static void DrawSmallField(ISeaGrid grid, Player thePlayer) {
+
 		const int SMALL_FIELD_LEFT = 39;
 		const int SMALL_FIELD_TOP = 373;
 		const int SMALL_FIELD_WIDTH = 166;
@@ -114,9 +114,10 @@ static class UtilityFunctions
 	/// <param name="cellWidth">the width of each cell</param>
 	/// <param name="cellHeight">the height of each cell</param>
 	/// <param name="cellGap">the gap between the cells</param>
-	private static void DrawCustomField(ISeaGrid grid, Player thePlayer, bool small, bool showShips, int left, int top, int width, int height, int cellWidth, int cellHeight,
-	int cellGap)
-	{
+	private static void DrawCustomField(ISeaGrid grid, Player thePlayer, bool small, bool showShips,
+																			int left, int top, int width, int height, int cellWidth,
+																			int cellHeight, int cellGap) {
+
 		//SwinGame.FillRectangle(Color.Blue, left, top, width, height)
 
 		int rowTop = 0;
@@ -218,8 +219,8 @@ static class UtilityFunctions
 	/// <summary>
 	/// Draws the message to the screen
 	/// </summary>
-	public static void DrawMessage()
-	{
+	public static void DrawMessage() {
+
 		SwinGame.DrawText(Message, MESSAGE_COLOR, GameResources.GameFont("Courier"), FIELD_LEFT, MESSAGE_TOP);
 	}
 
@@ -227,8 +228,8 @@ static class UtilityFunctions
 	/// Draws the background for the current state of the game
 	/// </summary>
 
-	public static void DrawBackground()
-	{
+	public static void DrawBackground() {
+
 		switch (GameController.CurrentState) {
 			case GameState.ViewingMainMenu:
 			case GameState.ViewingGameMenu:
@@ -251,20 +252,21 @@ static class UtilityFunctions
 		SwinGame.DrawFramerate(675, 585, GameResources.GameFont("CourierSmall"));
 	}
 
-	public static void AddExplosion(int row, int col)
-	{
+	public static void AddExplosion(int row, int col) {
+
 		AddAnimation(row, col, "Splash");
 	}
 
-	public static void AddSplash(int row, int col)
-	{
+	public static void AddSplash(int row, int col) {
+
 		AddAnimation(row, col, "Splash");
 	}
 
 
 	private static List<Sprite> _Animations = new List<Sprite>();
-	private static void AddAnimation(int row, int col, string image)
-	{
+
+	private static void AddAnimation(int row, int col, string image) {
+
 		Sprite s = default(Sprite);
 		Bitmap imgObj = default(Bitmap);
 
@@ -282,8 +284,8 @@ static class UtilityFunctions
 		_Animations.Add(s);
 	}
 
-	public static void UpdateAnimations()
-	{
+	public static void UpdateAnimations() {
+
 		List<Sprite> ended = new List<Sprite>();
 		foreach (Sprite s in _Animations) {
 			SwinGame.UpdateSprite(s);
@@ -298,15 +300,15 @@ static class UtilityFunctions
 		}
 	}
 
-	public static void DrawAnimations()
-	{
+	public static void DrawAnimations() {
+
 		foreach (Sprite s in _Animations) {
 			SwinGame.DrawSprite(s);
 		}
 	}
 
-	public static void DrawAnimationSequence()
-	{
+	public static void DrawAnimationSequence() {
+		
 		int i = 0;
 		for (i = 1; i <= ANIMATION_CELLS * FRAMES_PER_CELL; i++) {
 			UpdateAnimations();
@@ -314,4 +316,3 @@ static class UtilityFunctions
 		}
 	}
 }
-

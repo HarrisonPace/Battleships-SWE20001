@@ -8,8 +8,8 @@ using System.Diagnostics;
 /// <summary>
 /// The different AI levels.
 /// </summary>
-public enum AIOption
-{
+public enum AIOption {
+	
 	/// <summary>
 	/// Easy, total random shooting
 	/// </summary>

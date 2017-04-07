@@ -8,8 +8,8 @@ using System.Diagnostics;
 /// <summary>
 /// AttackResult gives the result after a shot has been made.
 /// </summary>
-public class AttackResult
-{
+public class AttackResult {
+
 	private ResultOfAttack _Value;
 	private Ship _Ship;
 	private string _Text;
@@ -62,8 +62,8 @@ public class AttackResult
 	/// Set the _Value to the PossibleAttack value
 	/// </summary>
 	/// <param name="value">either hit, miss, destroyed, shotalready</param>
-	public AttackResult(ResultOfAttack value, string text, int row, int column)
-	{
+	public AttackResult(ResultOfAttack value, string text, int row, int column) {
+
 		_Value = value;
 		_Text = text;
 		_Ship = null;
@@ -76,8 +76,8 @@ public class AttackResult
 	/// </summary>
 	/// <param name="value">either hit, miss, destroyed, shotalready</param>
 	/// <param name="ship">the ship information</param>
-	public AttackResult(ResultOfAttack value, Ship ship, string text, int row, int column) : this(value, text, row, column)
-	{
+	public AttackResult(ResultOfAttack value, Ship ship, string text, int row, int column) : this(value, text, row, column) {
+
 		_Ship = ship;
 	}
 
@@ -85,8 +85,8 @@ public class AttackResult
 	/// Displays the textual information about the attack
 	/// </summary>
 	/// <returns>The textual information about the attack</returns>
-	public override string ToString()
-	{
+	public override string ToString() {
+		
 		if (_Ship == null) {
 			return Text;
 		}

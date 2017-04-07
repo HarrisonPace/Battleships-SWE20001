@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using SwinGameSDK;
-static class GameLogic
-{
-	public static void Main()
-	{
+static class GameLogic {
+
+	public static void Main() {
+		
 		//Opens a new Graphics Window
 		SwinGame.OpenGraphicsWindow("Battle Ships", 800, 600);
 

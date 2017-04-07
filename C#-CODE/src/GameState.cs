@@ -11,8 +11,8 @@ using System.Diagnostics;
 /// the player.
 /// </summary>
 
-public enum GameState
-{
+public enum GameState {
+	
 	/// <summary>
 	/// The player is viewing the main menu.
 	/// </summary>
