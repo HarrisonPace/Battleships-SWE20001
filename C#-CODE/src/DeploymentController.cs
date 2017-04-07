@@ -1,9 +1,9 @@
 
-using Microsoft.VisualBasic;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
+
 using System.Diagnostics;
 using SwinGameSDK;
 
@@ -169,7 +169,7 @@ static class DeploymentController {
 	/// </summary>
 	/// <returns>The ship selected or none</returns>
 	private static ShipName GetShipMouseIsOver() {
-		
+
 		foreach (ShipName sn in Enum.GetValues(typeof(ShipName))) {
 			int i = 0;
 			i = ((int) sn) - 1;
