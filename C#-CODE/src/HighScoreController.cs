@@ -1,5 +1,3 @@
-
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,31 +6,30 @@ using System.Diagnostics;
 using System.IO;
 using SwinGameSDK;
 
-/// <summary>
+
 /// Controls displaying and collecting high score data.
-/// </summary>
-/// <remarks>
 /// Data is saved to a file.
-/// </remarks>
+
 static class HighScoreController {
 
 	private const int NAME_WIDTH = 3;
 
 	private const int SCORES_LEFT = 490;
-	/// <summary>
+
 	/// The score structure is used to keep the name and
 	/// score of the top players together.
-	/// </summary>
+
 	private struct Score : IComparable {
 
 		public string Name;
 
 		public int Value;
-		/// <summary>
+
 		/// Allows scores to be compared to facilitate sorting
-		/// </summary>
+		///
 		/// <param name="obj">the object to compare to</param>
-		/// <returns>a value that indicates the sort order</returns>
+		/// a value that indicates the sort order
+		
 		public int CompareTo(object obj) {
 
 			if (obj is Score) {
@@ -47,16 +44,15 @@ static class HighScoreController {
 
 
 	private static List<Score> _Scores = new List<Score>();
-	/// <summary>
+
 	/// Loads the scores from the highscores text file.
-	/// </summary>
-	/// <remarks>
+	///
 	/// The format is
 	/// # of scores
 	/// NNNSSS
 	///
 	/// Where NNN is the name and SSS is the score
-	/// </remarks>
+
 	private static void LoadScores() {
 
 		string filename = null;
@@ -86,16 +82,15 @@ static class HighScoreController {
 		input.Close();
 	}
 
-	/// <summary>
+
 	/// Saves the scores back to the highscores text file.
-	/// </summary>
-	/// <remarks>
+	///
 	/// The format is
 	/// # of scores
 	/// NNNSSS
 	///
 	/// Where NNN is the name and SSS is the score
-	/// </remarks>
+
 	private static void SaveScores() {
 
 		string filename = null;
@@ -113,9 +108,9 @@ static class HighScoreController {
 		output.Close();
 	}
 
-	/// <summary>
+
 	/// Draws the high scores to the screen.
-	/// </summary>
+
 	public static void DrawHighScores() {
 
 		const int SCORES_HEADING = 40;
@@ -143,10 +138,8 @@ static class HighScoreController {
 		}
 	}
 
-	/// <summary>
 	/// Handles the user input during the top score screen.
-	/// </summary>
-	/// <remarks></remarks>
+
 	public static void HandleHighScoreInput() {
 
 		if (SwinGame.MouseClicked(MouseButton.LeftButton) || SwinGame.KeyTyped(KeyCode.vk_ESCAPE) || SwinGame.KeyTyped(KeyCode.vk_RETURN)) {
@@ -154,13 +147,10 @@ static class HighScoreController {
 		}
 	}
 
-	/// <summary>
 	/// Read the user's name for their highsSwinGame.
-	/// </summary>
-	/// <param name="value">the player's sSwinGame.</param>
-	/// <remarks>
+	/// the player's sSwinGame.
 	/// This verifies if the score is a highsSwinGame.
-	/// </remarks>
+	
 	public static void ReadHighScore(int value) {
 		
 		const int ENTRY_TOP = 500;
@@ -178,7 +168,7 @@ static class HighScoreController {
 			int x = 0;
 			x = SCORES_LEFT + SwinGame.TextWidth(GameResources.GameFont("Courier"), "Name: ");
 
-			SwinGame.StartReadingText(Color.White, NAME_WIDTH, GameResources.GameFont("Courier"), x, ENTRY_TOP);
+			SwinGame.StartReadingText(Color.White, NAME_WIDTH + 1, GameResources.GameFont("Courier"), x, ENTRY_TOP);
 
 			//Read the text from the user
 			while (SwinGame.ReadingText()) {
@@ -195,19 +185,18 @@ static class HighScoreController {
 			if (s.Name.Length < 3) {
 				s.Name = s.Name + new string(Convert.ToChar(" "), 3 - s.Name.Length);
 			}
+			
+			if (s.Name.Length > 3) {
+				//s.Name = s.Name + new string(Convert.ToChar(" "), 3 - s.Name.Length);
+				s.Name = s.Name.Substring(s.Name.Length - 3);
+			}			
 
 			_Scores.RemoveAt(_Scores.Count - 1);
 			_Scores.Add(s);
 			_Scores.Sort();
+			SaveScores();
 
 			GameController.EndCurrentState();
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================
