@@ -1,10 +1,8 @@
-
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
 using System.Diagnostics;
+
 /// <summary>
 /// Player has its own _PlayerGrid, and can see an _EnemyGrid, it can also check if
 /// all ships are deployed and if all ships are detroyed. A Player can also attach.
@@ -19,8 +17,8 @@ public class Player : IEnumerable<Ship> {
 	protected BattleShipsGame _game;
 	private int _shots;
 	private int _hits;
-
 	private int _misses;
+
 	/// <summary>
 	/// Returns the game that the player is part of.
 	/// </summary>
@@ -39,8 +37,11 @@ public class Player : IEnumerable<Ship> {
 		set { _enemyGrid = value; }
 	}
 
+  /// <summary>
+	/// setup the player, adding ships and a seagrid
+	/// </summary>
+	/// <param name="controller">The games controller</param>
 	public Player(BattleShipsGame controller) {
-
 		_game = controller;
 		_playerGrid = new SeaGrid(_Ships);
 		//for each ship add the ships name so the seagrid knows about them
@@ -75,8 +76,11 @@ public class Player : IEnumerable<Ship> {
 		get { return _playerGrid.AllDeployed; }
 	}
 
+  /// <summary>
+	/// IsDestroyed returns true if all ships are destroyed
+	/// </summary>
 	public bool IsDestroyed {
-//Check if all ships are destroyed... -1 for the none ship
+    //Check if all ships are destroyed... -1 for the none ship
 		get { return _playerGrid.ShipsKilled == Enum.GetValues(typeof(ShipName)).Length - 1; }
 	}
 
@@ -97,11 +101,16 @@ public class Player : IEnumerable<Ship> {
 	/// The number of shots the player has made
 	/// </summary>
 	/// <value>shots taken</value>
-	/// <returns>teh number of shots taken</returns>
+	/// <returns>the number of shots taken</returns>
 	public int Shots {
 		get { return _shots; }
 	}
 
+  /// <summary>
+	/// The number of hits the player has taken
+	/// </summary>
+	/// <value>hits taken</value>
+	/// <returns>the number of hits taken</returns>
 	public int Hits {
 		get { return _hits; }
 	}
@@ -115,6 +124,11 @@ public class Player : IEnumerable<Ship> {
 		get { return _misses; }
 	}
 
+  /// <summary>
+	/// the players score
+	/// </summary>
+	/// <value>players score</value>
+	/// <returns>the players score</returns>
 	public int Score {
 		get {
 			if (IsDestroyed) {
@@ -131,7 +145,6 @@ public class Player : IEnumerable<Ship> {
 	/// </summary>
 	/// <returns>A Ship enumerator</returns>
 	public IEnumerator<Ship> GetShipEnumerator() {
-
 		Ship[] result = new Ship[_Ships.Values.Count + 1];
 		_Ships.Values.CopyTo(result, 0);
 		List<Ship> lst = new List<Ship>();
@@ -139,8 +152,8 @@ public class Player : IEnumerable<Ship> {
 
 		return lst.GetEnumerator();
 	}
-	IEnumerator<Ship> IEnumerable<Ship>.GetEnumerator()
-	{
+
+	IEnumerator<Ship> IEnumerable<Ship>.GetEnumerator() {
 		return GetShipEnumerator();
 	}
 
@@ -150,7 +163,6 @@ public class Player : IEnumerable<Ship> {
 	/// </summary>
 	/// <returns>A Ship enumerator</returns>
 	public IEnumerator GetEnumerator() {
-
 		Ship[] result = new Ship[_Ships.Values.Count + 1];
 		_Ships.Values.CopyTo(result, 0);
 		List<Ship> lst = new List<Ship>();
@@ -163,7 +175,6 @@ public class Player : IEnumerable<Ship> {
 	/// Vitual Attack allows the player to shoot
 	/// </summary>
 	public virtual AttackResult Attack() {
-
 		//human does nothing here...
 		return null;
 	}
@@ -175,7 +186,6 @@ public class Player : IEnumerable<Ship> {
 	/// <param name="col">the column to attack</param>
 	/// <returns>the result of the attack</returns>
 	internal AttackResult Shoot(int row, int col) {
-
 		_shots += 1;
 		AttackResult result = default(AttackResult);
 		result = EnemyGrid.HitTile(row, col);
@@ -193,13 +203,14 @@ public class Player : IEnumerable<Ship> {
 		return result;
 	}
 
+  /// <summary>
+	/// Randomaly place ships on the seagrid
+	/// </summary>
 	public virtual void RandomizeDeployment() {
-		
 		bool placementSuccessful = false;
 		Direction heading = default(Direction);
 
 		//for each ship to deploy in shipist
-
 		foreach (ShipName shipToPlace in Enum.GetValues(typeof(ShipName))) {
 			if (shipToPlace == ShipName.None)
 				continue;
@@ -230,10 +241,3 @@ public class Player : IEnumerable<Ship> {
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

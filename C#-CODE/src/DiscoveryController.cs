@@ -1,9 +1,6 @@
-
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
 using System.Diagnostics;
 using SwinGameSDK;
 
@@ -56,7 +53,7 @@ static class DiscoveryController {
 	/// Draws the game during the attack phase.
 	/// </summary>s
 	public static void DrawDiscovery() {
-		
+
 		const int SCORES_LEFT = 172;
 		const int SHOTS_TOP = 157;
 		const int HITS_TOP = 206;
@@ -77,10 +74,3 @@ static class DiscoveryController {
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

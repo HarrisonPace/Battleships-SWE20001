@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using System.Diagnostics;
 using SwinGameSDK;
 
@@ -51,7 +48,6 @@ public static class GameController {
 	}
 
 	static GameController() {
-
 		//bottom state will be quitting. If player exits main menu then the game is over
 		_state.Push(GameState.Quitting);
 
@@ -66,7 +62,6 @@ public static class GameController {
 	/// Creates an AI player based upon the _aiSetting.
 	/// </remarks>
 	public static void StartGame() {
-
 		if (_theGame != null)
 			EndGame();
 
@@ -98,9 +93,7 @@ public static class GameController {
 	/// <summary>
 	/// Stops listening to the old game once a new game is started
 	/// </summary>
-
 	private static void EndGame() {
-
 		//RemoveHandler _human.PlayerGrid.Changed, AddressOf GridChanged
 		_ai.PlayerGrid.Changed -= GridChanged;
 		_theGame.AttackCompleted -= AttackCompleted;
@@ -118,8 +111,13 @@ public static class GameController {
 		SwinGame.RefreshScreen();
 	}
 
+  /// <summary>
+	/// starts the explosion animation and plays the sound
+	/// </summary>
+	/// <param name="row">the row in the grid to play in</param>
+	/// <param name="column">the column in the grid to play in</param>
+	/// <param name="showAnimation">if the explosion animation should be shown</param>
 	private static void PlayHitSequence(int row, int column, bool showAnimation) {
-
 		if (showAnimation) {
 			UtilityFunctions.AddExplosion(row, column);
 		}
@@ -129,8 +127,13 @@ public static class GameController {
 		UtilityFunctions.DrawAnimationSequence();
 	}
 
+  /// <summary>
+	/// starts the missed shot animation and plays the sound
+	/// </summary>
+	/// <param name="row">the row in the grid to play in</param>
+	/// <param name="column">the column in the grid to play in</param>
+	/// <param name="showAnimation">if the explosion animation should be shown</param>
 	private static void PlayMissSequence(int row, int column, bool showAnimation) {
-
 		if (showAnimation) {
 			UtilityFunctions.AddSplash(row, column);
 		}
@@ -149,7 +152,6 @@ public static class GameController {
 	/// Displays a message, plays sound and redraws the screen
 	/// </remarks>
 	private static void AttackCompleted(object sender, AttackResult result) {
-
 		bool isHuman = false;
 		isHuman = object.ReferenceEquals(_theGame.Player, HumanPlayer);
 
@@ -202,7 +204,6 @@ public static class GameController {
 	/// state.
 	/// </remarks>
 	public static void EndDeployment() {
-
 		//deploy the players
 		_theGame.AddDeployedPlayer(_human);
 		_theGame.AddDeployedPlayer(_ai);
@@ -232,7 +233,6 @@ public static class GameController {
 	/// Checks the attack result once the attack is complete.
 	/// </remarks>
 	private static void AIAttack() {
-
 		AttackResult result = default(AttackResult);
 		result = _theGame.Player.Attack();
 		CheckAttackResult(result);
@@ -344,7 +344,6 @@ public static class GameController {
 	/// </summary>
 	/// <param name="state">the new game state</param>
 	public static void AddNewState(GameState state) {
-
 		_state.Push(state);
 		UtilityFunctions.Message = "";
 	}
@@ -372,7 +371,6 @@ public static class GameController {
 	/// </summary>
 	/// <param name="setting">the new difficulty level</param>
 	public static void SetDifficulty(AIOption setting) {
-
 		_aiSetting = setting;
 	}
 

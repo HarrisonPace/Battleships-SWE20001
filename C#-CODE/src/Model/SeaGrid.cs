@@ -1,10 +1,8 @@
-
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
 using System.Diagnostics;
+
 /// <summary>
 /// The SeaGrid is the grid upon which the ships are deployed.
 /// </summary>
@@ -16,12 +14,11 @@ using System.Diagnostics;
 public class SeaGrid : ISeaGrid {
 
 	private const int _WIDTH = 10;
-
 	private const int _HEIGHT = 10;
 	private Tile[,] _GameTiles;
 	private Dictionary<ShipName, Ship> _Ships;
-
 	private int _ShipsKilled = 0;
+
 	/// <summary>
 	/// The sea grid has changed and should be redrawn.
 	/// </summary>
@@ -81,7 +78,6 @@ public class SeaGrid : ISeaGrid {
 	/// SeaGrid constructor, a seagrid has a number of tiles stored in an array
 	/// </summary>
 	public SeaGrid(Dictionary<ShipName, Ship> ships) {
-
 		_GameTiles = new Tile[Width, Height];
 		//fill array with empty Tiles
 		int i = 0;
@@ -102,7 +98,6 @@ public class SeaGrid : ISeaGrid {
 	/// <param name="ship">the ship selected</param>
 	/// <param name="direction">the direction the ship is going</param>
 	public void MoveShip(int row, int col, ShipName ship, Direction direction) {
-
 		Ship newShip = _Ships[ship];
 		newShip.Remove();
 		AddShip(row, col, direction, newShip);
@@ -116,7 +111,6 @@ public class SeaGrid : ISeaGrid {
 	/// <param name="direction">direction of ship</param>
 	/// <param name="newShip">the ship</param>
 	private void AddShip(int row, int col, Direction direction, Ship newShip) {
-
 		try {
 			int size = newShip.Size;
 			int currentRow = row;
@@ -166,7 +160,6 @@ public class SeaGrid : ISeaGrid {
 	/// <param name="col">the cloumn at which is being shot</param>
 	/// <returns>An attackresult (hit, miss, sunk, shotalready)</returns>
 	public AttackResult HitTile(int row, int col) {
-		
 		try {
 			//tile is already hit
 			if (_GameTiles[row, col].Shot) {
@@ -196,10 +189,3 @@ public class SeaGrid : ISeaGrid {
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

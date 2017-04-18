@@ -1,10 +1,8 @@
-
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
 using System.Diagnostics;
+
 /// <summary>
 /// A Ship has all the details about itself. For example the shipname,
 /// size, number of hits taken and the location. Its able to add tiles,
@@ -21,8 +19,8 @@ public class Ship {
 	private List<Tile> _tiles;
 	private int _row;
 	private int _col;
-
 	private Direction _direction;
+
 	/// <summary>
 	/// The type of ship
 	/// </summary>
@@ -66,16 +64,28 @@ public class Ship {
 		get { return _row; }
 	}
 
+  /// <summary>
+	/// The Column location of the ship
+	/// </summary>
+	/// <value>The topmost location of the ship</value>
+	/// <returns>the Column of the ship</returns>
 	public int Column {
 		get { return _col; }
 	}
 
+  /// <summary>
+	/// The Direction the ship is facing
+	/// </summary>
+	/// <value>ship is leftright or updawn</value>
+	/// <returns>ship is leftright or updawn</returns>
 	public Direction Direction {
 		get { return _direction; }
 	}
 
+  /// <summary>
+	/// Sets the name of a ship
+	/// </summary>
 	public Ship(ShipName ship) {
-
 		_shipName = ship;
 		_tiles = new List<Tile>();
 
@@ -88,7 +98,6 @@ public class Ship {
 	/// </summary>
 	/// <param name="tile">one of the tiles the ship is on</param>
 	public void AddTile(Tile tile) {
-
 		_tiles.Add(tile);
 	}
 
@@ -96,15 +105,16 @@ public class Ship {
 	/// Remove clears the tile back to a sea tile
 	/// </summary>
 	public void Remove() {
-
 		foreach (Tile tile in _tiles) {
 			tile.ClearShip();
 		}
 		_tiles.Clear();
 	}
 
+  /// <summary>
+	/// add a hit to hits taken
+	/// </summary>
 	public void Hit() {
-
 		_hitsTaken = _hitsTaken + 1;
 	}
 
@@ -116,6 +126,9 @@ public class Ship {
 		get { return _tiles.Count > 0; }
 	}
 
+  /// <summary>
+	/// checks if a ship has been destroyed
+	/// </summary>
 	public bool IsDestroyed {
 		get { return Hits == Size; }
 	}
@@ -127,16 +140,8 @@ public class Ship {
 	/// <param name="row"></param>
 	/// <param name="col"></param>
 	internal void Deployed(Direction direction, int row, int col) {
-		
 		_row = row;
 		_col = col;
 		_direction = direction;
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

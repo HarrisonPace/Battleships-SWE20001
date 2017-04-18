@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
 using System.Diagnostics;
 using System.IO;
 using SwinGameSDK;
@@ -9,29 +8,21 @@ using SwinGameSDK;
 
 /// Controls displaying and collecting high score data.
 /// Data is saved to a file.
-
 static class HighScoreController {
-
 	private const int NAME_WIDTH = 3;
-
 	private const int SCORES_LEFT = 490;
 
 	/// The score structure is used to keep the name and
 	/// score of the top players together.
-
-	private struct Score : IComparable {
-
+  private struct Score : IComparable {
 		public string Name;
-
-		public int Value;
+    public int Value;
 
 		/// Allows scores to be compared to facilitate sorting
 		///
 		/// <param name="obj">the object to compare to</param>
 		/// a value that indicates the sort order
-		
 		public int CompareTo(object obj) {
-
 			if (obj is Score) {
 				Score other = (Score)obj;
 
@@ -52,9 +43,7 @@ static class HighScoreController {
 	/// NNNSSS
 	///
 	/// Where NNN is the name and SSS is the score
-
 	private static void LoadScores() {
-
 		string filename = null;
 		filename = SwinGame.PathToResource("highscores.txt");
 
@@ -90,9 +79,7 @@ static class HighScoreController {
 	/// NNNSSS
 	///
 	/// Where NNN is the name and SSS is the score
-
 	private static void SaveScores() {
-
 		string filename = null;
 		filename = SwinGame.PathToResource("highscores.txt");
 
@@ -110,9 +97,7 @@ static class HighScoreController {
 
 
 	/// Draws the high scores to the screen.
-
 	public static void DrawHighScores() {
-
 		const int SCORES_HEADING = 40;
 		const int SCORES_TOP = 80;
 		const int SCORE_GAP = 30;
@@ -139,9 +124,7 @@ static class HighScoreController {
 	}
 
 	/// Handles the user input during the top score screen.
-
 	public static void HandleHighScoreInput() {
-
 		if (SwinGame.MouseClicked(MouseButton.LeftButton) || SwinGame.KeyTyped(KeyCode.vk_ESCAPE) || SwinGame.KeyTyped(KeyCode.vk_RETURN)) {
 			GameController.EndCurrentState();
 		}
@@ -150,9 +133,7 @@ static class HighScoreController {
 	/// Read the user's name for their highsSwinGame.
 	/// the player's sSwinGame.
 	/// This verifies if the score is a highsSwinGame.
-	
 	public static void ReadHighScore(int value) {
-		
 		const int ENTRY_TOP = 500;
 
 		if (_Scores.Count == 0)
@@ -185,11 +166,11 @@ static class HighScoreController {
 			if (s.Name.Length < 3) {
 				s.Name = s.Name + new string(Convert.ToChar(" "), 3 - s.Name.Length);
 			}
-			
+
 			if (s.Name.Length > 3) {
 				//s.Name = s.Name + new string(Convert.ToChar(" "), 3 - s.Name.Length);
 				s.Name = s.Name.Substring(s.Name.Length - 3);
-			}			
+			}
 
 			_Scores.RemoveAt(_Scores.Count - 1);
 			_Scores.Add(s);

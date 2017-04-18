@@ -1,11 +1,9 @@
-
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
 using System.Diagnostics;
 using SwinGameSDK;
+
 /// <summary>
 /// This includes a number of utility methods for
 /// drawing and interacting with the Mouse.
@@ -43,6 +41,7 @@ static class UtilityFunctions {
 	public const int ANIMATION_CELLS = 7;
 
 	public const int FRAMES_PER_CELL = 8;
+
 	/// <summary>
 	/// Determines if the mouse is in a given rectangle.
 	/// </summary>
@@ -52,7 +51,6 @@ static class UtilityFunctions {
 	/// <param name="h">the height to check</param>
 	/// <returns>true if the mouse is in the area checked</returns>
 	public static bool IsMouseInRectangle(int x, int y, int w, int h) {
-
 		Point2D mouse = default(Point2D);
 		bool result = false;
 
@@ -76,7 +74,6 @@ static class UtilityFunctions {
 	/// <param name="thePlayer">the players ships to show</param>
 	/// <param name="showShips">indicates if the ships should be shown</param>
 	public static void DrawField(ISeaGrid grid, Player thePlayer, bool showShips) {
-
 		DrawCustomField(grid, thePlayer, false, showShips, FIELD_LEFT, FIELD_TOP, FIELD_WIDTH, FIELD_HEIGHT, CELL_WIDTH, CELL_HEIGHT,
 		CELL_GAP);
 	}
@@ -87,7 +84,6 @@ static class UtilityFunctions {
 	/// <param name="grid">the grid to show</param>
 	/// <param name="thePlayer">the player to show the ships of</param>
 	public static void DrawSmallField(ISeaGrid grid, Player thePlayer) {
-
 		const int SMALL_FIELD_LEFT = 39;
 		const int SMALL_FIELD_TOP = 373;
 		const int SMALL_FIELD_WIDTH = 166;
@@ -206,6 +202,7 @@ static class UtilityFunctions {
 
 
 	private static string _message;
+
 	/// <summary>
 	/// The message to display
 	/// </summary>
@@ -220,16 +217,13 @@ static class UtilityFunctions {
 	/// Draws the message to the screen
 	/// </summary>
 	public static void DrawMessage() {
-
 		SwinGame.DrawText(Message, MESSAGE_COLOR, GameResources.GameFont("Courier"), FIELD_LEFT, MESSAGE_TOP);
 	}
 
 	/// <summary>
 	/// Draws the background for the current state of the game
 	/// </summary>
-
 	public static void DrawBackground() {
-
 		switch (GameController.CurrentState) {
 			case GameState.ViewingMainMenu:
 			case GameState.ViewingGameMenu:
@@ -252,21 +246,33 @@ static class UtilityFunctions {
 		SwinGame.DrawFramerate(675, 585, GameResources.GameFont("CourierSmall"));
 	}
 
+  /// <summary>
+	/// start animation of explosion in a given cell on the grid
+	/// </summary>
+	/// <param name="row">the given cells row number</param>
+	/// <param name="col">the given cells column number</param>
 	public static void AddExplosion(int row, int col) {
-
 		AddAnimation(row, col, "Splash");
 	}
 
+  /// <summary>
+	/// start animation of splash in a given cell on the grid
+	/// </summary>
+	/// <param name="row">the given cells row number</param>
+	/// <param name="col">the given cells column number</param>
 	public static void AddSplash(int row, int col) {
-
 		AddAnimation(row, col, "Splash");
 	}
-
 
 	private static List<Sprite> _Animations = new List<Sprite>();
 
+  /// <summary>
+	/// add an animation to the list of animations
+	/// </summary>
+	/// <param name="row">the animations cell row number</param>
+	/// <param name="col">the animations cell column number</param>
+	/// <param name="img">the animations image</param>
 	private static void AddAnimation(int row, int col, string image) {
-
 		Sprite s = default(Sprite);
 		Bitmap imgObj = default(Bitmap);
 
@@ -284,8 +290,10 @@ static class UtilityFunctions {
 		_Animations.Add(s);
 	}
 
+  /// <summary>
+	/// cycle through all animations in the animation list and update the sprite.
+	/// </summary>
 	public static void UpdateAnimations() {
-
 		List<Sprite> ended = new List<Sprite>();
 		foreach (Sprite s in _Animations) {
 			SwinGame.UpdateSprite(s);
@@ -300,15 +308,19 @@ static class UtilityFunctions {
 		}
 	}
 
+  /// <summary>
+	/// cycle through all animations in the animation list and draw the current Sprite
+	/// </summary>
 	public static void DrawAnimations() {
-
 		foreach (Sprite s in _Animations) {
 			SwinGame.DrawSprite(s);
 		}
 	}
 
+  /// <summary>
+	/// cycle through all animations in the animation list update the animations
+	/// </summary>
 	public static void DrawAnimationSequence() {
-		
 		int i = 0;
 		for (i = 1; i <= ANIMATION_CELLS * FRAMES_PER_CELL; i++) {
 			UpdateAnimations();

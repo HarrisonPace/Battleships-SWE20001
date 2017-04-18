@@ -1,10 +1,8 @@
-
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
 using System.Diagnostics;
+
 /// <summary>
 /// Tile knows its location on the grid, if it is a ship and if it has been
 /// shot before
@@ -72,7 +70,6 @@ public class Tile {
 	/// <param name="col">the col on the grid</param>
 	/// <param name="ship">what ship it is</param>
 	public Tile(int row, int col, Ship ship) {
-
 		_RowValue = row;
 		_ColumnValue = col;
 		_Ship = ship;
@@ -82,7 +79,6 @@ public class Tile {
 	/// Clearship will remove the ship from the tile
 	/// </summary>
 	public void ClearShip() {
-
 		_Ship = null;
 	}
 
@@ -118,7 +114,6 @@ public class Tile {
 	/// it will give an error
 	/// </summary>
 	internal void Shoot() {
-		
 		if ((false == Shot)) {
 			Shot = true;
 			if (_Ship != null) {
@@ -129,10 +124,3 @@ public class Tile {
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

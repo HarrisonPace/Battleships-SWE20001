@@ -1,11 +1,9 @@
-
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
 using System.Diagnostics;
 using SwinGameSDK;
+
 /// <summary>
 /// The AIPlayer is a type of player. It can readomly deploy ships, it also has the
 /// functionality to generate coordinates and shoot at tiles
@@ -17,10 +15,9 @@ public abstract class AIPlayer : Player {
 	/// AI Player. The use of which determines the difficulty.
 	/// </summary>
 	protected class Location {
-
 		private int _Row;
-
 		private int _Column;
+
 		/// <summary>
 		/// The row of the shot
 		/// </summary>
@@ -47,7 +44,6 @@ public abstract class AIPlayer : Player {
 		/// <param name="row">the row of the location</param>
 		/// <param name="column">the column of the location</param>
 		public Location(int row, int column) {
-
 			_Column = column;
 			_Row = row;
 		}
@@ -59,7 +55,6 @@ public abstract class AIPlayer : Player {
 		/// <param name="other">location 2</param>
 		/// <returns>true if location 1 and location 2 are at the same spot</returns>
 		public static bool operator ==(Location @this, Location other) {
-
 			return !ReferenceEquals(@this, null) && !ReferenceEquals(other, null) && @this.Row == other.Row && @this.Column == other.Column;
 			//return @this != null && other != null && @this.Row == other.Row && @this.Column == other.Column;
 		}
@@ -71,7 +66,6 @@ public abstract class AIPlayer : Player {
 		/// <param name="other">location 2</param>
 		/// <returns>true if location 1 and location 2 are not at the same spot</returns>
 		public static bool operator !=(Location @this, Location other) {
-
 			return ReferenceEquals(@this, null) || ReferenceEquals(other, null) || @this.Row != other.Row || @this.Column != other.Column;
 			//return @this == null || other == null || @this.Row != other.Row || @this.Column != other.Column;
 		}
@@ -101,7 +95,6 @@ public abstract class AIPlayer : Player {
 	/// </summary>
 	/// <returns>The result of the last attack</returns>
 	public override AttackResult Attack() {
-
 		AttackResult result = default(AttackResult);
 		int row = 0;
 		int column = 0;
@@ -124,7 +117,6 @@ public abstract class AIPlayer : Player {
 	/// Wait a short period to simulate the think time
 	/// </summary>
 	private void Delay() {
-
 		int i = 0;
 		for (i = 0; i <= 150; i++) {
 			//Dont delay if window is closed
@@ -137,10 +129,3 @@ public abstract class AIPlayer : Player {
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

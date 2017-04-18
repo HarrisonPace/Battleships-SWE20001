@@ -1,10 +1,8 @@
-
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
 using System.Diagnostics;
+
 /// <summary>
 /// The BattleShipsGame controls a big part of the game. It will add the two players
 /// to the game and make sure that both players ships are all deployed before starting the game.
@@ -32,6 +30,7 @@ public class BattleShipsGame {
 	private Player[] _players = new Player[3];
 
 	private int _playerIndex = 0;
+
 	/// <summary>
 	/// The current player.
 	/// </summary>
@@ -48,7 +47,6 @@ public class BattleShipsGame {
 	/// </summary>
 	/// <param name="p"></param>
 	public void AddDeployedPlayer(Player p) {
-
 		if (_players[0] == null) {
 			_players[0] = p;
 		} else if (_players[1] == null) {
@@ -64,7 +62,6 @@ public class BattleShipsGame {
 	/// to examine the details visable on the other's sea grid.
 	/// </summary>
 	private void CompleteDeployment() {
-
 		_players[0].Enemy = new SeaGridAdapter(_players[1].PlayerGrid);
 		_players[1].Enemy = new SeaGridAdapter(_players[0].PlayerGrid);
 	}
@@ -77,7 +74,6 @@ public class BattleShipsGame {
 	/// <param name="col">the column fired upon</param>
 	/// <returns>The result of the attack</returns>
 	public AttackResult Shoot(int row, int col) {
-		
 		AttackResult newAttack = default(AttackResult);
 		int otherPlayer = (_playerIndex + 1) % 2;
 
@@ -100,10 +96,3 @@ public class BattleShipsGame {
 		return newAttack;
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

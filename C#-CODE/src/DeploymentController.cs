@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using System.Diagnostics;
 using SwinGameSDK;
 
@@ -37,6 +34,7 @@ static class DeploymentController {
 	private static Direction _currentDirection = Direction.UpDown;
 
 	private static ShipName _selectedShip = ShipName.Tug;
+
 	/// <summary>
 	/// Handles user input for the Deployment phase of the game.
 	/// </summary>
@@ -94,7 +92,6 @@ static class DeploymentController {
 	private static void DoDeployClick() {
 
 		Point2D mouse = default(Point2D);
-
 		mouse = SwinGame.MousePosition();
 
 		//Calculate the row/col clicked
@@ -121,7 +118,6 @@ static class DeploymentController {
 	/// that the player can deploy.
 	/// </summary>
 	public static void DrawDeployment() {
-
 		UtilityFunctions.DrawField(GameController.HumanPlayer.PlayerGrid, GameController.HumanPlayer, true);
 
 		//Draw the Left/Right and Up/Down buttons
@@ -182,10 +178,3 @@ static class DeploymentController {
 		return ShipName.None;
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================
