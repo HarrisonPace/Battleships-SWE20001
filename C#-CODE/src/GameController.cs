@@ -1,9 +1,9 @@
 
- 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
+
 using System.Diagnostics;
 using SwinGameSDK;
 
@@ -372,15 +372,8 @@ public static class GameController {
 	/// </summary>
 	/// <param name="setting">the new difficulty level</param>
 	public static void SetDifficulty(AIOption setting) {
-		
+
 		_aiSetting = setting;
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================
