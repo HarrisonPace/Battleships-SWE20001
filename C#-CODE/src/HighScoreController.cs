@@ -149,7 +149,7 @@ static class HighScoreController {
 			int x = 0;
 			x = SCORES_LEFT + SwinGame.TextWidth(GameResources.GameFont("Courier"), "Name: ");
 
-			SwinGame.StartReadingText(Color.White, NAME_WIDTH + 1, GameResources.GameFont("Courier"), x, ENTRY_TOP);
+			SwinGame.StartReadingText(Color.White, 20, GameResources.GameFont("Courier"), x, ENTRY_TOP);
 
 			//Read the text from the user
 			while (SwinGame.ReadingText()) {
@@ -167,11 +167,17 @@ static class HighScoreController {
 				s.Name = s.Name + new string(Convert.ToChar(" "), 3 - s.Name.Length);
 			}
 
+/*			
+	// Old Code for removing Characters longer than 3
+
+	
 			if (s.Name.Length > 3) {
 				//s.Name = s.Name + new string(Convert.ToChar(" "), 3 - s.Name.Length);
 				s.Name = s.Name.Substring(s.Name.Length - 3);
 			}
 
+*/			
+			
 			_Scores.RemoveAt(_Scores.Count - 1);
 			_Scores.Add(s);
 			_Scores.Sort();
