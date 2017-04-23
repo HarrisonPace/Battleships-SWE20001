@@ -252,7 +252,7 @@ static class UtilityFunctions {
 	/// <param name="row">the given cells row number</param>
 	/// <param name="col">the given cells column number</param>
 	public static void AddExplosion(int row, int col) {
-		AddAnimation(row, col, "Explosion");
+		AddAnimation(row, col, "Splash");
 	}
 
   /// <summary>
