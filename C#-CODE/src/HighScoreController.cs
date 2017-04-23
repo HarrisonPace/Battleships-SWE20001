@@ -82,7 +82,6 @@ static class HighScoreController {
 	private static void SaveScores() {
 		string filename = null;
 		filename = SwinGame.PathToResource("highscores.txt");
-		Console.WriteLine(filename);
 
 		StreamWriter output = default(StreamWriter);
 		output = new StreamWriter(filename);
@@ -91,7 +90,6 @@ static class HighScoreController {
 
 		foreach (Score s in _Scores) {
 			output.WriteLine(s.Name + s.Value);
-			Console.WriteLine(s.Name + s.Value);
 		}
 		output.Close();
 	}
@@ -155,7 +153,9 @@ static class HighScoreController {
 			//Read the text from the user
 			while (SwinGame.ReadingText()) {
 				SwinGame.ProcessEvents();
-
+				if (SwinGame.TextReadAsASCII().Length > 3) {
+					SwinGame.EndReadingText();
+				}
 				UtilityFunctions.DrawBackground();
 				DrawHighScores();
 				SwinGame.DrawText("Name: ", Color.White, GameResources.GameFont("Courier"), SCORES_LEFT, ENTRY_TOP);
