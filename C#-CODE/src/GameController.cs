@@ -19,6 +19,8 @@ public static class GameController {
 	private static Stack<GameState> _state = new Stack<GameState>();
 
 	private static AIOption _aiSetting;
+	
+	private static List<Ship> _destroyedShip = new List<Ship>();
 	/// <summary>
 	/// Returns the current state of the game, indicating which screen is
 	/// currently being used
@@ -45,6 +47,10 @@ public static class GameController {
 	/// <returns>the conputer player</returns>
 	public static Player ComputerPlayer {
 		get { return _ai; }
+	}
+	
+	public static List<Ship> DestroyedShip {
+		get { return _destroyedShip; }
 	}
 
 	static GameController() {
@@ -165,7 +171,8 @@ public static class GameController {
 			case ResultOfAttack.Destroyed:
 				PlayHitSequence(result.Row, result.Column, isHuman);
 				Audio.PlaySoundEffect(GameResources.GameSound("Sink"));
-
+				if (isHuman)
+					_destroyedShip.Add(result.Ship);
 				break;
 			case ResultOfAttack.GameOver:
 				PlayHitSequence(result.Row, result.Column, isHuman);
@@ -181,7 +188,8 @@ public static class GameController {
 				} else {
 					Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
 				}
-
+				
+				_destroyedShip.Clear();
 				break;
 			case ResultOfAttack.Hit:
 				PlayHitSequence(result.Row, result.Column, isHuman);

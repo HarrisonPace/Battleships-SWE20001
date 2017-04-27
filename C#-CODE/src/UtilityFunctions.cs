@@ -95,6 +95,23 @@ static class UtilityFunctions {
 		DrawCustomField(grid, thePlayer, true, true, SMALL_FIELD_LEFT, SMALL_FIELD_TOP, SMALL_FIELD_WIDTH, SMALL_FIELD_HEIGHT, SMALL_FIELD_CELL_WIDTH, SMALL_FIELD_CELL_HEIGHT,
 		SMALL_FIELD_CELL_GAP);
 	}
+	
+	///Draw a window showing the destroyed enemy ships
+	public static void DrawDestroyedShip(List<Ship> destroyedShip)
+	{
+		int DESTROYED_SHIP_LIST_LEFT = 480;
+		int DESTROYED_SHIP_LIST_TOP = 300;
+
+		SwinGame.DrawBitmap(GameResources.GameImage("DestroyedShip"), 470, 250);
+
+		SwinGame.DrawText("Enemy's Destroyed Ship", Color.White, GameResources.GameFont("Menu"), 480, 260);
+
+		foreach (Ship s in destroyedShip)
+		{
+			SwinGame.DrawText(s.Name + " (" + s.Size + ")", Color.White, GameResources.GameFont("Menu"), DESTROYED_SHIP_LIST_LEFT, DESTROYED_SHIP_LIST_TOP);
+			DESTROYED_SHIP_LIST_TOP += 15;
+		}
+	}
 
 	/// <summary>
 	/// Draws the player's grid and ships.

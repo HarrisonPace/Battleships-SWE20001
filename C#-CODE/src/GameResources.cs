@@ -41,6 +41,8 @@ public static class GameResources {
 		NewImage("Explosion", "explosion.png");
 		NewImage("Splash", "splash.png");
 
+		//DestroyedShip
+		NewImage("DestroyedShip", "destroyed_ship.png");
 	}
 
   // sounds that will be used
