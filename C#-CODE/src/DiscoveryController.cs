@@ -11,6 +11,12 @@ static class DiscoveryController {
 
 	private static bool _turnPlayerA = true;
 
+	public static bool TurnPlayerA
+	{
+		get { return _turnPlayerA; }
+		set { _turnPlayerA = value; }
+	}
+
 	/// <summary>
 	/// Handles input during the discovery phase of the game.
 	/// </summary>
@@ -44,11 +50,34 @@ static class DiscoveryController {
 		row = Convert.ToInt32(Math.Floor((mouse.Y - UtilityFunctions.FIELD_TOP) / (UtilityFunctions.CELL_HEIGHT + UtilityFunctions.CELL_GAP)));
 		col = Convert.ToInt32(Math.Floor((mouse.X - UtilityFunctions.FIELD_LEFT) / (UtilityFunctions.CELL_WIDTH + UtilityFunctions.CELL_GAP)));
 
-		if (row >= 0 & row < GameController.HumanPlayerA.EnemyGrid.Height) {
-			if (col >= 0 & col < GameController.HumanPlayerA.EnemyGrid.Width) {
-				GameController.Attack(row, col);
+		if (GameController.Multiplayer) { //Multiplayer game
+			if (TurnPlayerA) { //doing turn of playerA
+
+				if (row >= 0 & row < GameController.HumanPlayerA.EnemyGrid.Height) {
+					if (col >= 0 & col < GameController.HumanPlayerA.EnemyGrid.Width) {
+						GameController.Attack(row, col);
+					}
+				}
+
+			} else { //doing turn of playerB
+
+				if (row >= 0 & row < GameController.HumanPlayerB.EnemyGrid.Height) {
+					if (col >= 0 & col < GameController.HumanPlayerB.EnemyGrid.Width) {
+						GameController.Attack(row, col);
+					}
+				}
+
+			} //end else turn of playerB
+		} else { //Singleplayer game
+
+			if (row >= 0 & row < GameController.HumanPlayerA.EnemyGrid.Height) {
+				if (col >= 0 & col < GameController.HumanPlayerA.EnemyGrid.Width) {
+					GameController.Attack(row, col);
+				}
 			}
-		}
+
+		} //end else Singleplayer game
+
 	}
 
 	/// <summary>
@@ -63,7 +92,7 @@ static class DiscoveryController {
 
 
 		if (GameController.Multiplayer) { //Multiplayer game
-			if (_turnPlayerA) { //doing turn of playerA
+			if (TurnPlayerA) { //doing turn of playerA
 
 
 				if (SwinGame.KeyDown(KeyCode.vk_c)) {

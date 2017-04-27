@@ -76,7 +76,7 @@ static class DeploymentController {
 
 					if (GameController.HumanPlayerA.ReadyToDeploy && UtilityFunctions.IsMouseInRectangle(PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP, PLAY_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
 						//GameController.EndDeployment();
-						UtilityFunctions.Delay(UtilityFunctions.DELAY_BETWEEN_TURN);
+						UtilityFunctions.Delay();
 						_doingPlayerA = false;
 					} else if (UtilityFunctions.IsMouseInRectangle(UP_DOWN_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
 						_currentDirection = Direction.UpDown;
@@ -103,6 +103,7 @@ static class DeploymentController {
 					}
 
 					if (GameController.HumanPlayerB.ReadyToDeploy && UtilityFunctions.IsMouseInRectangle(PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP, PLAY_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+						_doingPlayerA = true;
 						GameController.EndDeployment();
 					} else if (UtilityFunctions.IsMouseInRectangle(UP_DOWN_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
 						_currentDirection = Direction.UpDown;
@@ -161,17 +162,56 @@ static class DeploymentController {
 		row = Convert.ToInt32(Math.Floor((mouse.Y - UtilityFunctions.FIELD_TOP) / (UtilityFunctions.CELL_HEIGHT + UtilityFunctions.CELL_GAP)));
 		col = Convert.ToInt32(Math.Floor((mouse.X - UtilityFunctions.FIELD_LEFT) / (UtilityFunctions.CELL_WIDTH + UtilityFunctions.CELL_GAP)));
 
-		if (row >= 0 & row < GameController.HumanPlayerA.PlayerGrid.Height) {
-			if (col >= 0 & col < GameController.HumanPlayerA.PlayerGrid.Width) {
-				//if in the area try to deploy
-				try {
-					GameController.HumanPlayerA.PlayerGrid.MoveShip(row, col, _selectedShip, _currentDirection);
-				} catch (Exception ex) {
-					Audio.PlaySoundEffect(GameResources.GameSound("Error"));
-					UtilityFunctions.Message = ex.Message;
+
+		if (GameController.Multiplayer) { //Multiplayer game
+			if (_doingPlayerA) { //doing deployment of playerA
+
+				if (row >= 0 & row < GameController.HumanPlayerA.PlayerGrid.Height) {
+					if (col >= 0 & col < GameController.HumanPlayerA.PlayerGrid.Width) {
+						//if in the area try to deploy
+						try {
+							GameController.HumanPlayerA.PlayerGrid.MoveShip(row, col, _selectedShip, _currentDirection);
+						} catch (Exception ex) {
+							Audio.PlaySoundEffect(GameResources.GameSound("Error"));
+							UtilityFunctions.Message = ex.Message;
+						}
+					}
+				}
+
+			} else { //doing deployment of playerB
+
+				if (row >= 0 & row < GameController.HumanPlayerB.PlayerGrid.Height) {
+					if (col >= 0 & col < GameController.HumanPlayerB.PlayerGrid.Width) {
+						//if in the area try to deploy
+						try {
+							GameController.HumanPlayerB.PlayerGrid.MoveShip(row, col, _selectedShip, _currentDirection);
+						} catch (Exception ex) {
+							Audio.PlaySoundEffect(GameResources.GameSound("Error"));
+							UtilityFunctions.Message = ex.Message;
+						}
+					}
+				}
+
+			} //end else deployment of playerB
+		} else { //Singleplayer game
+
+			if (row >= 0 & row < GameController.HumanPlayerA.PlayerGrid.Height) {
+				if (col >= 0 & col < GameController.HumanPlayerA.PlayerGrid.Width) {
+					//if in the area try to deploy
+					try {
+						GameController.HumanPlayerA.PlayerGrid.MoveShip(row, col, _selectedShip, _currentDirection);
+					} catch (Exception ex) {
+						Audio.PlaySoundEffect(GameResources.GameSound("Error"));
+						UtilityFunctions.Message = ex.Message;
+					}
 				}
 			}
+
 		}
+
+
+
+
 	}
 
 	/// <summary>

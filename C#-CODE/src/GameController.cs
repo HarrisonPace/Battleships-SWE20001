@@ -197,10 +197,14 @@ public static class GameController {
 					SwinGame.RefreshScreen();
 				}
 
-				if (HumanPlayerA.IsDestroyed) {
-					Audio.PlaySoundEffect(GameResources.GameSound("Lose"));
-				} else {
+				if (Multiplayer) {
 					Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
+				} else {
+					if (HumanPlayerA.IsDestroyed) {
+						Audio.PlaySoundEffect(GameResources.GameSound("Lose"));
+					} else {
+						Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
+					}
 				}
 
 				break;
@@ -271,15 +275,47 @@ public static class GameController {
 	/// <remarks>Gets the AI to attack if the result switched
 	/// to the AI player.</remarks>
 	private static void CheckAttackResult(AttackResult result) {
-		switch (result.Value) {
-			case ResultOfAttack.Miss:
-				if (object.ReferenceEquals(_theGame.Player, ComputerPlayer))
-					AIAttack();
-				break;
-			case ResultOfAttack.GameOver:
-				SwitchState(GameState.EndingGame);
-				break;
-		}
+
+		if (GameController.Multiplayer) { //Multiplayer game
+			if (DiscoveryController.TurnPlayerA) { //doing turn of playerA
+
+				switch (result.Value) {
+					case ResultOfAttack.Miss:
+							UtilityFunctions.Delay();
+							DiscoveryController.TurnPlayerA = false;
+						break;
+					case ResultOfAttack.GameOver:
+						SwitchState(GameState.EndingGame);
+						break;
+				}
+
+			} else { //doing turn of playerB
+
+				switch (result.Value) {
+					case ResultOfAttack.Miss:
+							UtilityFunctions.Delay();
+							DiscoveryController.TurnPlayerA = true;
+						break;
+					case ResultOfAttack.GameOver:
+						SwitchState(GameState.EndingGame);
+						break;
+				}
+
+			} //end else turn of playerB
+		} else { //Singleplayer game
+
+			switch (result.Value) {
+				case ResultOfAttack.Miss:
+					if (object.ReferenceEquals(_theGame.Player, ComputerPlayer))
+						AIAttack();
+					break;
+				case ResultOfAttack.GameOver:
+					SwitchState(GameState.EndingGame);
+					break;
+			}
+
+		} //end else Singleplayer game
+
 	}
 
 	/// <summary>
@@ -314,7 +350,11 @@ public static class GameController {
 				EndingGameController.HandleEndOfGameInput();
 				break;
 			case GameState.ViewingHighScores:
-				HighScoreController.HandleHighScoreInput();
+				if (Multiplayer) {
+					EndCurrentState();
+				} else {
+					HighScoreController.HandleHighScoreInput();
+				}
 				break;
 		}
 

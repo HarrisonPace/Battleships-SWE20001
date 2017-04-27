@@ -10,7 +10,7 @@ using SwinGameSDK;
 /// </summary>
 static class UtilityFunctions {
 
-	public const uint DELAY_BETWEEN_TURN = 5;
+	public const uint DELAY_BETWEEN_TURN = 5000;
 
 	public const int FIELD_TOP = 122;
 	public const int FIELD_LEFT = 349;
@@ -44,13 +44,13 @@ static class UtilityFunctions {
 
 	public const int FRAMES_PER_CELL = 8;
 
-	public static void Delay(uint seconds)
+	public static void Delay()
 	{
 		SwinGame.FillRectangle(Color.Black, 0, 0, 800, 600);
-		SwinGame.DrawText("Delay for " + seconds.ToString() + " seconds", Color.White, 300, 250);
+		SwinGame.DrawText("Delay for " + DELAY_BETWEEN_TURN/1000 + " seconds", Color.White, 300, 250);
 		SwinGame.DrawText("Change player", Color.White, 300, 270);
 		SwinGame.RefreshScreen();
-		SwinGame.Delay(seconds*1000);
+		SwinGame.Delay(DELAY_BETWEEN_TURN);
 	}
 
 
