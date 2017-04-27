@@ -12,9 +12,9 @@ Module EndingGameController
     ''' </summary>
     Public Sub DrawEndOfGame()
         DrawField(ComputerPlayer.PlayerGrid, ComputerPlayer, True)
-        DrawSmallField(HumanPlayer.PlayerGrid, HumanPlayer)
+        DrawSmallField(HumanPlayerA.PlayerGrid, HumanPlayerA)
 
-        If HumanPlayer.IsDestroyed Then
+        If HumanPlayerA.IsDestroyed Then
             SwinGame.DrawTextLines("YOU LOSE!", Color.White, Color.Transparent, GameFont("ArialLarge"), FontAlignment.AlignCenter, 0, 250, SwinGame.ScreenWidth(), SwinGame.ScreenHeight())
         Else
             SwinGame.DrawTextLines("-- WINNER --", Color.White, Color.Transparent, GameFont("ArialLarge"), FontAlignment.AlignCenter, 0, 250, SwinGame.ScreenWidth(), SwinGame.ScreenHeight())
@@ -29,7 +29,7 @@ Module EndingGameController
         If SwinGame.MouseClicked(MouseButton.LeftButton) _
             OrElse SwinGame.KeyTyped(KeyCode.VK_RETURN) _
             OrElse SwinGame.KeyTyped(KeyCode.VK_ESCAPE) Then
-            ReadHighScore(HumanPlayer.Score)
+            ReadHighScore(HumanPlayerA.Score)
             EndCurrentState()
         End If
     End Sub

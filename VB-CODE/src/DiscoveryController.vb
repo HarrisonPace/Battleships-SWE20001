@@ -35,8 +35,8 @@ Module DiscoveryController
         row = Convert.ToInt32(Math.Floor((mouse.Y - FIELD_TOP) / (CELL_HEIGHT + CELL_GAP)))
         col = Convert.ToInt32(Math.Floor((mouse.X - FIELD_LEFT) / (CELL_WIDTH + CELL_GAP)))
 
-        If row >= 0 And row < HumanPlayer.EnemyGrid.Height Then
-            If col >= 0 And col < HumanPlayer.EnemyGrid.Width Then
+        If row >= 0 And row < HumanPlayerA.EnemyGrid.Height Then
+            If col >= 0 And col < HumanPlayerA.EnemyGrid.Width Then
                 Attack(row, col)
             End If
         End If
@@ -52,17 +52,17 @@ Module DiscoveryController
         Const SPLASH_TOP As Integer = 256
 
         If (SwinGame.KeyDown(KeyCode.VK_LSHIFT) or SwinGame.KeyDown(KeyCode.VK_RSHIFT)) And SwinGame.KeyDown(KeyCode.VK_C) Then
-            DrawField(HumanPlayer.EnemyGrid, ComputerPlayer, True)
+            DrawField(HumanPlayerA.EnemyGrid, ComputerPlayer, True)
         Else
-            DrawField(HumanPlayer.EnemyGrid, ComputerPlayer, False)
+            DrawField(HumanPlayerA.EnemyGrid, ComputerPlayer, False)
         End If
 
-        DrawSmallField(HumanPlayer.PlayerGrid, HumanPlayer)
+        DrawSmallField(HumanPlayerA.PlayerGrid, HumanPlayerA)
         DrawMessage()
 
-        SwinGame.DrawText(HumanPlayer.Shots.ToString(), Color.White, GameFont("Menu"), SCORES_LEFT, SHOTS_TOP)
-        SwinGame.DrawText(HumanPlayer.Hits.ToString(), Color.White, GameFont("Menu"), SCORES_LEFT, HITS_TOP)
-        SwinGame.DrawText(HumanPlayer.Missed.ToString(), Color.White, GameFont("Menu"), SCORES_LEFT, SPLASH_TOP)
+        SwinGame.DrawText(HumanPlayerA.Shots.ToString(), Color.White, GameFont("Menu"), SCORES_LEFT, SHOTS_TOP)
+        SwinGame.DrawText(HumanPlayerA.Hits.ToString(), Color.White, GameFont("Menu"), SCORES_LEFT, HITS_TOP)
+        SwinGame.DrawText(HumanPlayerA.Missed.ToString(), Color.White, GameFont("Menu"), SCORES_LEFT, SPLASH_TOP)
     End Sub
 
 End Module

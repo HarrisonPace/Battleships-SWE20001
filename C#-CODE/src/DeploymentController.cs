@@ -35,6 +35,8 @@ static class DeploymentController {
 
 	private static ShipName _selectedShip = ShipName.Tug;
 
+	private static bool _doingPlayerA = true;
+
 	/// <summary>
 	/// Handles user input for the Deployment phase of the game.
 	/// </summary>
@@ -49,36 +51,95 @@ static class DeploymentController {
 			GameController.AddNewState(GameState.ViewingGameMenu);
 		}
 
-		if (SwinGame.KeyTyped(KeyCode.vk_UP) | SwinGame.KeyTyped(KeyCode.vk_DOWN)) {
+		if (SwinGame.KeyTyped(KeyCode.vk_UP) || SwinGame.KeyTyped(KeyCode.vk_DOWN)) {
 			_currentDirection = Direction.UpDown;
 		}
-		if (SwinGame.KeyTyped(KeyCode.vk_LEFT) | SwinGame.KeyTyped(KeyCode.vk_RIGHT)) {
+		if (SwinGame.KeyTyped(KeyCode.vk_LEFT) || SwinGame.KeyTyped(KeyCode.vk_RIGHT)) {
 			_currentDirection = Direction.LeftRight;
 		}
 
-		if (SwinGame.KeyTyped(KeyCode.vk_r)) {
-			GameController.HumanPlayer.RandomizeDeployment();
-		}
+		if (GameController.Multiplayer) { //Multiplayer game
+			if (_doingPlayerA) { //doing deployment of playerA
 
-		if (SwinGame.MouseClicked(MouseButton.LeftButton)) {
-			ShipName selected = default(ShipName);
-			selected = GetShipMouseIsOver();
-			if (selected != ShipName.None) {
-				_selectedShip = selected;
-			} else {
-				DoDeployClick();
+				if (SwinGame.KeyTyped(KeyCode.vk_r)) {
+					GameController.HumanPlayerA.RandomizeDeployment();
+				}
+
+				if (SwinGame.MouseClicked(MouseButton.LeftButton)) {
+					ShipName selected = default(ShipName);
+					selected = GetShipMouseIsOver();
+					if (selected != ShipName.None) {
+						_selectedShip = selected;
+					} else {
+						DoDeployClick();
+					}
+
+					if (GameController.HumanPlayerA.ReadyToDeploy && UtilityFunctions.IsMouseInRectangle(PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP, PLAY_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+						//GameController.EndDeployment();
+						UtilityFunctions.Delay(UtilityFunctions.DELAY_BETWEEN_TURN);
+						_doingPlayerA = false;
+					} else if (UtilityFunctions.IsMouseInRectangle(UP_DOWN_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
+						_currentDirection = Direction.UpDown;
+					} else if (UtilityFunctions.IsMouseInRectangle(LEFT_RIGHT_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
+						_currentDirection = Direction.LeftRight;
+					} else if (UtilityFunctions.IsMouseInRectangle(RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP, RANDOM_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+						GameController.HumanPlayerA.RandomizeDeployment();
+					}
+				}
+
+			} else { //doing deployment of playerB
+
+				if (SwinGame.KeyTyped(KeyCode.vk_r)) {
+					GameController.HumanPlayerB.RandomizeDeployment();
+				}
+
+				if (SwinGame.MouseClicked(MouseButton.LeftButton)) {
+					ShipName selected = default(ShipName);
+					selected = GetShipMouseIsOver();
+					if (selected != ShipName.None) {
+						_selectedShip = selected;
+					} else {
+						DoDeployClick();
+					}
+
+					if (GameController.HumanPlayerB.ReadyToDeploy && UtilityFunctions.IsMouseInRectangle(PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP, PLAY_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+						GameController.EndDeployment();
+					} else if (UtilityFunctions.IsMouseInRectangle(UP_DOWN_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
+						_currentDirection = Direction.UpDown;
+					} else if (UtilityFunctions.IsMouseInRectangle(LEFT_RIGHT_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
+						_currentDirection = Direction.LeftRight;
+					} else if (UtilityFunctions.IsMouseInRectangle(RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP, RANDOM_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+						GameController.HumanPlayerB.RandomizeDeployment();
+					}
+				}
+
+			} //end else deployment of playerB
+		} else { //Singleplayer game
+
+			if (SwinGame.KeyTyped(KeyCode.vk_r)) {
+				GameController.HumanPlayerA.RandomizeDeployment();
 			}
 
-			if (GameController.HumanPlayer.ReadyToDeploy & UtilityFunctions.IsMouseInRectangle(PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP, PLAY_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
-				GameController.EndDeployment();
-			} else if (UtilityFunctions.IsMouseInRectangle(UP_DOWN_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
-				_currentDirection = Direction.UpDown;
-			} else if (UtilityFunctions.IsMouseInRectangle(LEFT_RIGHT_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
-				_currentDirection = Direction.LeftRight;
-			} else if (UtilityFunctions.IsMouseInRectangle(RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP, RANDOM_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
-				GameController.HumanPlayer.RandomizeDeployment();
+			if (SwinGame.MouseClicked(MouseButton.LeftButton)) {
+				ShipName selected = default(ShipName);
+				selected = GetShipMouseIsOver();
+				if (selected != ShipName.None) {
+					_selectedShip = selected;
+				} else {
+					DoDeployClick();
+				}
+
+				if (GameController.HumanPlayerA.ReadyToDeploy && UtilityFunctions.IsMouseInRectangle(PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP, PLAY_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+					GameController.EndDeployment();
+				} else if (UtilityFunctions.IsMouseInRectangle(UP_DOWN_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
+					_currentDirection = Direction.UpDown;
+				} else if (UtilityFunctions.IsMouseInRectangle(LEFT_RIGHT_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT)) {
+					_currentDirection = Direction.LeftRight;
+				} else if (UtilityFunctions.IsMouseInRectangle(RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP, RANDOM_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+					GameController.HumanPlayerA.RandomizeDeployment();
+				}
 			}
-		}
+		} //end else Singleplayer game
 	}
 
 	/// <summary>
@@ -100,11 +161,11 @@ static class DeploymentController {
 		row = Convert.ToInt32(Math.Floor((mouse.Y - UtilityFunctions.FIELD_TOP) / (UtilityFunctions.CELL_HEIGHT + UtilityFunctions.CELL_GAP)));
 		col = Convert.ToInt32(Math.Floor((mouse.X - UtilityFunctions.FIELD_LEFT) / (UtilityFunctions.CELL_WIDTH + UtilityFunctions.CELL_GAP)));
 
-		if (row >= 0 & row < GameController.HumanPlayer.PlayerGrid.Height) {
-			if (col >= 0 & col < GameController.HumanPlayer.PlayerGrid.Width) {
+		if (row >= 0 & row < GameController.HumanPlayerA.PlayerGrid.Height) {
+			if (col >= 0 & col < GameController.HumanPlayerA.PlayerGrid.Width) {
 				//if in the area try to deploy
 				try {
-					GameController.HumanPlayer.PlayerGrid.MoveShip(row, col, _selectedShip, _currentDirection);
+					GameController.HumanPlayerA.PlayerGrid.MoveShip(row, col, _selectedShip, _currentDirection);
 				} catch (Exception ex) {
 					Audio.PlaySoundEffect(GameResources.GameSound("Error"));
 					UtilityFunctions.Message = ex.Message;
@@ -118,7 +179,20 @@ static class DeploymentController {
 	/// that the player can deploy.
 	/// </summary>
 	public static void DrawDeployment() {
-		UtilityFunctions.DrawField(GameController.HumanPlayer.PlayerGrid, GameController.HumanPlayer, true);
+
+		if (GameController.Multiplayer) { //Multiplayer game
+			if (_doingPlayerA) { //doing deployment of playerA
+				UtilityFunctions.DrawField(GameController.HumanPlayerA.PlayerGrid, GameController.HumanPlayerA, true);
+
+			} else { //doing deployment of playerB
+				UtilityFunctions.DrawField(GameController.HumanPlayerB.PlayerGrid, GameController.HumanPlayerB, true);
+
+			} //end else deployment of playerB
+		} else { //Singleplayer game
+			UtilityFunctions.DrawField(GameController.HumanPlayerA.PlayerGrid, GameController.HumanPlayerA, true);
+
+		}
+
 
 		//Draw the Left/Right and Up/Down buttons
 		if (_currentDirection == Direction.LeftRight) {
@@ -138,26 +212,53 @@ static class DeploymentController {
 			if (i >= 0) {
 				if (sn == _selectedShip) {
 					SwinGame.DrawBitmap(GameResources.GameImage("SelectedShip"), SHIPS_LEFT, SHIPS_TOP + i * SHIPS_HEIGHT);
-					//    SwinGame.FillRectangle(Color.LightBlue, SHIPS_LEFT, SHIPS_TOP + i * SHIPS_HEIGHT, SHIPS_WIDTH, SHIPS_HEIGHT)
-					//Else
-					//    SwinGame.FillRectangle(Color.Gray, SHIPS_LEFT, SHIPS_TOP + i * SHIPS_HEIGHT, SHIPS_WIDTH, SHIPS_HEIGHT)
 				}
-
-				//SwinGame.DrawRectangle(Color.Black, SHIPS_LEFT, SHIPS_TOP + i * SHIPS_HEIGHT, SHIPS_WIDTH, SHIPS_HEIGHT)
-				//SwinGame.DrawText(sn.ToString(), Color.Black, GameFont("Courier"), SHIPS_LEFT + TEXT_OFFSET, SHIPS_TOP + i * SHIPS_HEIGHT)
-
 			}
 		}
 
-		if (GameController.HumanPlayer.ReadyToDeploy) {
-			SwinGame.DrawBitmap(GameResources.GameImage("PlayButton"), PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP);
-			//SwinGame.FillRectangle(Color.LightBlue, PLAY_BUTTON_LEFT, PLAY_BUTTON_TOP, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT)
-			//SwinGame.DrawText("PLAY", Color.Black, GameFont("Courier"), PLAY_BUTTON_LEFT + TEXT_OFFSET, PLAY_BUTTON_TOP)
+		if (GameController.Multiplayer) { //Multiplayer game
+			if (_doingPlayerA) { //doing deployment of playerA
+				if (GameController.HumanPlayerA.ReadyToDeploy) {
+					SwinGame.DrawBitmap(GameResources.GameImage("PlayButton"), PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP);
+				}
+			} else { //doing deployment of playerB
+				if (GameController.HumanPlayerB.ReadyToDeploy) {
+					SwinGame.DrawBitmap(GameResources.GameImage("PlayButton"), PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP);
+				}
+			} //end else deployment of playerB
+		} else { //Singleplayer game
+			if (GameController.HumanPlayerA.ReadyToDeploy) {
+				SwinGame.DrawBitmap(GameResources.GameImage("PlayButton"), PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP);
+			}
 		}
 
 		SwinGame.DrawBitmap(GameResources.GameImage("RandomButton"), RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP);
 
 		UtilityFunctions.DrawMessage();
+
+		//debug
+		SwinGame.FillRectangle(Color.White, 0, 0, 200, 15);
+		if (GameController.Multiplayer) {
+			SwinGame.DrawText("Game Type: Multiplayer", Color.Black, 0, 0);
+		} else {
+			SwinGame.DrawText("Game Type: Singleplayer", Color.Black, 0, 0);
+		}
+		SwinGame.FillRectangle(Color.White, 0, 15, 200, 15);
+		if (GameController.Multiplayer) { //Multiplayer game
+			if (_doingPlayerA) { //doing deployment of playerA
+				if (GameController.HumanPlayerA.ReadyToDeploy) {
+					SwinGame.DrawText("Doing player A", Color.Black, 0, 15);
+				}
+			} else { //doing deployment of playerB
+				if (GameController.HumanPlayerB.ReadyToDeploy) {
+					SwinGame.DrawText("Doing player B", Color.Black, 0, 15);
+				}
+			} //end else deployment of playerB
+		} else { //Singleplayer game
+			if (GameController.HumanPlayerA.ReadyToDeploy) {
+				SwinGame.DrawText("Doing player A", Color.Black, 0, 15);
+			}
+		}
 	}
 
 	/// <summary>

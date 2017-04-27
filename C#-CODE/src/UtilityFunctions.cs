@@ -10,6 +10,8 @@ using SwinGameSDK;
 /// </summary>
 static class UtilityFunctions {
 
+	public const uint DELAY_BETWEEN_TURN = 5;
+
 	public const int FIELD_TOP = 122;
 	public const int FIELD_LEFT = 349;
 	public const int FIELD_WIDTH = 418;
@@ -41,6 +43,16 @@ static class UtilityFunctions {
 	public const int ANIMATION_CELLS = 7;
 
 	public const int FRAMES_PER_CELL = 8;
+
+	public static void Delay(uint seconds)
+	{
+		SwinGame.FillRectangle(Color.Black, 0, 0, 800, 600);
+		SwinGame.DrawText("Delay for " + seconds.ToString() + " seconds", Color.White, 300, 250);
+		SwinGame.DrawText("Change player", Color.White, 300, 270);
+		SwinGame.RefreshScreen();
+		SwinGame.Delay(seconds*1000);
+	}
+
 
 	/// <summary>
 	/// Determines if the mouse is in a given rectangle.

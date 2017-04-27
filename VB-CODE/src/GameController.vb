@@ -8,7 +8,7 @@ Imports SwinGameSDK
 Public Module GameController
 
     Private _theGame As BattleShipsGame
-    Private _human As Player
+    Private _humanA As Player
     Private _ai As AIPlayer
 
     Private _state As Stack(Of GameState) = New Stack(Of GameState)()
@@ -32,9 +32,9 @@ Public Module GameController
     ''' </summary>
     ''' <value>the human player</value>
     ''' <returns>the human player</returns>
-    Public ReadOnly Property HumanPlayer() As Player
+    Public ReadOnly Property HumanPlayerA() As Player
         Get
-            Return _human
+            Return _humanA
         End Get
     End Property
 
@@ -79,9 +79,9 @@ Public Module GameController
                 _ai = New AIHardPlayer(_theGame)
         End Select
 
-        _human = New Player(_theGame)
+        _humanA = New Player(_theGame)
 
-        'AddHandler _human.PlayerGrid.Changed, AddressOf GridChanged
+        'AddHandler _humanA.PlayerGrid.Changed, AddressOf GridChanged
         AddHandler _ai.PlayerGrid.Changed, AddressOf GridChanged
         AddHandler _theGame.AttackCompleted, AddressOf AttackCompleted
 
@@ -93,7 +93,7 @@ Public Module GameController
     ''' </summary>
 
     Private Sub EndGame()
-        'RemoveHandler _human.PlayerGrid.Changed, AddressOf GridChanged
+        'RemoveHandler _humanA.PlayerGrid.Changed, AddressOf GridChanged
         RemoveHandler _ai.PlayerGrid.Changed, AddressOf GridChanged
         RemoveHandler _theGame.AttackCompleted, AddressOf AttackCompleted
     End Sub
@@ -139,7 +139,7 @@ Public Module GameController
     ''' </remarks>
     Private Sub AttackCompleted(ByVal sender As Object, ByVal result As AttackResult)
         Dim isHuman As Boolean
-        isHuman = _theGame.Player Is HumanPlayer
+        isHuman = _theGame.Player Is HumanPlayerA
 
         If isHuman Then
             Message = "You " & result.ToString()
@@ -161,7 +161,7 @@ Public Module GameController
                     SwinGame.RefreshScreen()
                 End While
 
-                If HumanPlayer.IsDestroyed Then
+                If HumanPlayerA.IsDestroyed Then
                     Audio.PlaySoundEffect(GameSound("Lose"))
                 Else
                     Audio.PlaySoundEffect(GameSound("Winner"))
@@ -186,7 +186,7 @@ Public Module GameController
     ''' </remarks>
     Public Sub EndDeployment()
         'deploy the players
-        _theGame.AddDeployedPlayer(_human)
+        _theGame.AddDeployedPlayer(_humanA)
         _theGame.AddDeployedPlayer(_ai)
 
         SwitchState(GameState.Discovering)

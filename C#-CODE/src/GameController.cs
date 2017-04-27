@@ -12,13 +12,25 @@ using SwinGameSDK;
 public static class GameController {
 
 	private static BattleShipsGame _theGame;
-	private static Player _human;
+	private static Player _humanA;
+	private static Player _humanB;
+	private static bool _multiplayer;
 
 	private static AIPlayer _ai;
 
 	private static Stack<GameState> _state = new Stack<GameState>();
 
 	private static AIOption _aiSetting;
+
+	/// <summary>
+	/// Returns false if the game is Singleplayer or true for Multiplayer
+	/// </summary>
+	/// <value>Singleplayer or Multiplayer</value>
+	/// <returns>Singleplayer or Multiplayer</returns>
+	public static bool Multiplayer {
+		get { return _multiplayer; }
+	}
+
 	/// <summary>
 	/// Returns the current state of the game, indicating which screen is
 	/// currently being used
@@ -30,12 +42,21 @@ public static class GameController {
 	}
 
 	/// <summary>
-	/// Returns the human player.
+	/// Returns the human player A.
 	/// </summary>
-	/// <value>the human player</value>
-	/// <returns>the human player</returns>
-	public static Player HumanPlayer {
-		get { return _human; }
+	/// <value>the humanA player</value>
+	/// <returns>the humanA player</returns>
+	public static Player HumanPlayerA {
+		get { return _humanA; }
+	}
+
+	/// <summary>
+	/// Returns the human player B.
+	/// </summary>
+	/// <value>the humanB player</value>
+	/// <returns>the humanB player</returns>
+	public static Player HumanPlayerB {
+		get { return _humanB; }
 	}
 
 	/// <summary>
@@ -61,9 +82,11 @@ public static class GameController {
 	/// <remarks>
 	/// Creates an AI player based upon the _aiSetting.
 	/// </remarks>
-	public static void StartGame() {
+	public static void StartGame(bool gameType) {
 		if (_theGame != null)
 			EndGame();
+
+		_multiplayer = gameType;
 
 		//Create the game
 		_theGame = new BattleShipsGame();
@@ -81,9 +104,10 @@ public static class GameController {
 				break;
 		}
 
-		_human = new Player(_theGame);
+		_humanA = new Player(_theGame);
+		_humanB = new Player(_theGame);
 
-		//AddHandler _human.PlayerGrid.Changed, AddressOf GridChanged
+		//AddHandler _humanA.PlayerGrid.Changed, AddressOf GridChanged
 		_ai.PlayerGrid.Changed += GridChanged;
 		_theGame.AttackCompleted += AttackCompleted;
 
@@ -94,7 +118,7 @@ public static class GameController {
 	/// Stops listening to the old game once a new game is started
 	/// </summary>
 	private static void EndGame() {
-		//RemoveHandler _human.PlayerGrid.Changed, AddressOf GridChanged
+		//RemoveHandler _humanA.PlayerGrid.Changed, AddressOf GridChanged
 		_ai.PlayerGrid.Changed -= GridChanged;
 		_theGame.AttackCompleted -= AttackCompleted;
 	}
@@ -106,7 +130,6 @@ public static class GameController {
 	/// <param name="sender">the grid that changed</param>
 	/// <param name="args">not used</param>
 	private static void GridChanged(object sender, EventArgs args) {
-
 		DrawScreen();
 		SwinGame.RefreshScreen();
 	}
@@ -123,7 +146,6 @@ public static class GameController {
 		}
 
 		Audio.PlaySoundEffect(GameResources.GameSound("Hit"));
-
 		UtilityFunctions.DrawAnimationSequence();
 	}
 
@@ -139,7 +161,6 @@ public static class GameController {
 		}
 
 		Audio.PlaySoundEffect(GameResources.GameSound("Miss"));
-
 		UtilityFunctions.DrawAnimationSequence();
 	}
 
@@ -153,7 +174,7 @@ public static class GameController {
 	/// </remarks>
 	private static void AttackCompleted(object sender, AttackResult result) {
 		bool isHuman = false;
-		isHuman = object.ReferenceEquals(_theGame.Player, HumanPlayer);
+		isHuman = object.ReferenceEquals(_theGame.Player, HumanPlayerA);
 
 		if (isHuman) {
 			UtilityFunctions.Message = "You " + result.ToString();
@@ -176,7 +197,7 @@ public static class GameController {
 					SwinGame.RefreshScreen();
 				}
 
-				if (HumanPlayer.IsDestroyed) {
+				if (HumanPlayerA.IsDestroyed) {
 					Audio.PlaySoundEffect(GameResources.GameSound("Lose"));
 				} else {
 					Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
@@ -205,8 +226,12 @@ public static class GameController {
 	/// </remarks>
 	public static void EndDeployment() {
 		//deploy the players
-		_theGame.AddDeployedPlayer(_human);
-		_theGame.AddDeployedPlayer(_ai);
+		_theGame.AddDeployedPlayer(_humanA);
+		if (Multiplayer) {
+			_theGame.AddDeployedPlayer(_humanB);
+		} else {
+			_theGame.AddDeployedPlayer(_ai);
+		}
 
 		SwitchState(GameState.Discovering);
 	}
@@ -220,7 +245,6 @@ public static class GameController {
 	/// Checks the attack result once the attack is complete
 	/// </remarks>
 	public static void Attack(int row, int col) {
-
 		AttackResult result = default(AttackResult);
 		result = _theGame.Shoot(row, col);
 		CheckAttackResult(result);
@@ -247,7 +271,6 @@ public static class GameController {
 	/// <remarks>Gets the AI to attack if the result switched
 	/// to the AI player.</remarks>
 	private static void CheckAttackResult(AttackResult result) {
-
 		switch (result.Value) {
 			case ResultOfAttack.Miss:
 				if (object.ReferenceEquals(_theGame.Player, ComputerPlayer))
@@ -268,7 +291,6 @@ public static class GameController {
 	/// performed depend upon the state of the game.
 	/// </remarks>
 	public static void HandleUserInput() {
-
 		//Read incoming input events
 		SwinGame.ProcessEvents();
 
@@ -306,7 +328,6 @@ public static class GameController {
 	/// What is drawn depends upon the state of the game.
 	/// </remarks>
 	public static void DrawScreen() {
-
 		UtilityFunctions.DrawBackground();
 
 		switch (CurrentState) {
@@ -353,7 +374,6 @@ public static class GameController {
 	/// </summary>
 	/// <param name="newState">the new state of the game</param>
 	public static void SwitchState(GameState newState) {
-
 		EndCurrentState();
 		AddNewState(newState);
 	}
@@ -362,7 +382,6 @@ public static class GameController {
 	/// Ends the current state, returning to the prior state
 	/// </summary>
 	public static void EndCurrentState() {
-
 		_state.Pop();
 	}
 

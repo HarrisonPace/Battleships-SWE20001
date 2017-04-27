@@ -50,7 +50,7 @@ Module DeploymentController
         End If
 
         If SwinGame.KeyTyped(KeyCode.VK_R) Then
-            HumanPlayer.RandomizeDeployment()
+            HumanPlayerA.RandomizeDeployment()
         End If
 
         If SwinGame.MouseClicked(MouseButton.LeftButton) Then
@@ -62,14 +62,14 @@ Module DeploymentController
                 DoDeployClick()
             End If
 
-            If HumanPlayer.ReadyToDeploy And IsMouseInRectangle(PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP, PLAY_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT) Then
+            If HumanPlayerA.ReadyToDeploy And IsMouseInRectangle(PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP, PLAY_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT) Then
                 EndDeployment()
             ElseIf IsMouseInRectangle(UP_DOWN_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT) Then
                 _currentDirection = Direction.LeftRight
             ElseIf IsMouseInRectangle(LEFT_RIGHT_BUTTON_LEFT, TOP_BUTTONS_TOP, DIR_BUTTONS_WIDTH, TOP_BUTTONS_HEIGHT) Then
                 _currentDirection = Direction.LeftRight
             ElseIf IsMouseInRectangle(RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP, RANDOM_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT) Then
-                HumanPlayer.RandomizeDeployment()
+                HumanPlayerA.RandomizeDeployment()
             End If
         End If
     End Sub
@@ -92,11 +92,11 @@ Module DeploymentController
         row = Convert.ToInt32(Math.Floor((mouse.Y) / (CELL_HEIGHT + CELL_GAP)))
         col = Convert.ToInt32(Math.Floor((mouse.X - FIELD_LEFT) / (CELL_WIDTH + CELL_GAP)))
 
-        If row >= 0 And row < HumanPlayer.PlayerGrid.Height Then
-            If col >= 0 And col < HumanPlayer.PlayerGrid.Width Then
+        If row >= 0 And row < HumanPlayerA.PlayerGrid.Height Then
+            If col >= 0 And col < HumanPlayerA.PlayerGrid.Width Then
                 'if in the area try to deploy
                 Try
-                    HumanPlayer.PlayerGrid.MoveShip(row, col, _selectedShip, _currentDirection)
+                    HumanPlayerA.PlayerGrid.MoveShip(row, col, _selectedShip, _currentDirection)
                 Catch ex As Exception
                     Audio.PlaySoundEffect(GameSound("Error"))
                     Message = ex.Message
@@ -110,7 +110,7 @@ Module DeploymentController
     ''' that the player can deploy.
     ''' </summary>
     Public Sub DrawDeployment()
-        DrawField(HumanPlayer.PlayerGrid, HumanPlayer, True)
+        DrawField(HumanPlayerA.PlayerGrid, HumanPlayerA, True)
 
         'Draw the Left/Right and Up/Down buttons
         If _currentDirection = Direction.LeftRight Then
@@ -141,7 +141,7 @@ Module DeploymentController
             End If
         Next
 
-        If HumanPlayer.ReadyToDeploy Then
+        If HumanPlayerA.ReadyToDeploy Then
             SwinGame.DrawBitmap(GameImage("PlayButton"), PLAY_BUTTON_LEFT, TOP_BUTTONS_TOP)
             'SwinGame.FillRectangle(Color.LightBlue, PLAY_BUTTON_LEFT, PLAY_BUTTON_TOP, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT)
             'SwinGame.DrawText("PLAY", Color.Black, GameFont("Courier"), PLAY_BUTTON_LEFT + TEXT_OFFSET, PLAY_BUTTON_TOP)

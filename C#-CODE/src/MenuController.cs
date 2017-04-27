@@ -19,7 +19,8 @@ static class MenuController {
 	/// </remarks>
 	private static readonly string[][] _menuStructure = {
 		new string[] {
-			"PLAY",
+			"SINGLEPLAYER",
+			"MULTIPLAYER",
 			"SETUP",
 			"SCORES",
 			"QUIT"
@@ -35,7 +36,7 @@ static class MenuController {
 			"HARD"
 		}
 	};
-  
+
 	private const int MENU_TOP = 575;
 	private const int MENU_LEFT = 30;
 	private const int MENU_GAP = 0;
@@ -48,11 +49,12 @@ static class MenuController {
 	private const int GAME_MENU = 1;
 
 	private const int SETUP_MENU = 2;
-	private const int MAIN_MENU_PLAY_BUTTON = 0;
-	private const int MAIN_MENU_SETUP_BUTTON = 1;
-	private const int MAIN_MENU_TOP_SCORES_BUTTON = 2;
+	private const int MAIN_MENU_SINGLEPLAYER_BUTTON = 0;
+	private const int MAIN_MENU_MULTIPLAYER_BUTTON = 1;
+	private const int MAIN_MENU_SETUP_BUTTON = 2;
+	private const int MAIN_MENU_TOP_SCORES_BUTTON = 3;
 
-	private const int MAIN_MENU_QUIT_BUTTON = 3;
+	private const int MAIN_MENU_QUIT_BUTTON = 4;
 	private const int SETUP_MENU_EASY_BUTTON = 0;
 	private const int SETUP_MENU_MEDIUM_BUTTON = 1;
 	private const int SETUP_MENU_HARD_BUTTON = 2;
@@ -184,10 +186,10 @@ static class MenuController {
 		for (i = 0; i <= _menuStructure[menu].Length - 1; i++) {
 			int btnLeft = 0;
 			btnLeft = MENU_LEFT + BUTTON_SEP * (i + xOffset);
-			//SwinGame.FillRectangle(Color.White, btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT)
+			SwinGame.FillRectangle(Color.White, btnLeft-5, btnTop-5, BUTTON_WIDTH+10, BUTTON_HEIGHT+5);
 			SwinGame.DrawTextLines(_menuStructure[menu][i], MENU_COLOR, Color.Black, GameResources.GameFont("Menu"), FontAlignment.AlignCenter, btnLeft + TEXT_OFFSET, btnTop + TEXT_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
 
-			if (SwinGame.MouseDown(MouseButton.LeftButton) & IsMouseOverMenu(i, level, xOffset)) {
+			if (SwinGame.MouseDown(MouseButton.LeftButton) && IsMouseOverMenu(i, level, xOffset)) {
 				SwinGame.DrawRectangle(HIGHLIGHT_COLOR, btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);
 			}
 		}
@@ -241,8 +243,11 @@ static class MenuController {
 	/// <param name="button">the button pressed</param>
 	private static void PerformMainMenuAction(int button) {
 		switch (button) {
-			case MAIN_MENU_PLAY_BUTTON:
-				GameController.StartGame();
+			case MAIN_MENU_SINGLEPLAYER_BUTTON:
+				GameController.StartGame(false);
+				break;
+			case MAIN_MENU_MULTIPLAYER_BUTTON:
+				GameController.StartGame(true);
 				break;
 			case MAIN_MENU_SETUP_BUTTON:
 				GameController.AddNewState(GameState.AlteringSettings);
