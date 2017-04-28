@@ -25,8 +25,10 @@ static class DeploymentController {
 
 	private const int LEFT_RIGHT_BUTTON_LEFT = 350;
 	private const int RANDOM_BUTTON_LEFT = 547;
+	private const int HOME_BUTTON_LEFT = 480;
 
 	private const int RANDOM_BUTTON_WIDTH = 51;
+	private const int HOME_BUTTON_WIDTH = 51;
 
 	private const int DIR_BUTTONS_WIDTH = 47;
 
@@ -77,6 +79,9 @@ static class DeploymentController {
 				_currentDirection = Direction.LeftRight;
 			} else if (UtilityFunctions.IsMouseInRectangle(RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP, RANDOM_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
 				GameController.HumanPlayer.RandomizeDeployment();
+			}
+			else if (UtilityFunctions.IsMouseInRectangle(HOME_BUTTON_LEFT, TOP_BUTTONS_TOP, HOME_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+				GameController.AddNewState(GameState.ViewingGameMenu);
 			}
 		}
 	}
@@ -156,6 +161,8 @@ static class DeploymentController {
 		}
 
 		SwinGame.DrawBitmap(GameResources.GameImage("RandomButton"), RANDOM_BUTTON_LEFT, TOP_BUTTONS_TOP);
+
+		SwinGame.DrawBitmap(GameResources.GameImage("HomeButton"), HOME_BUTTON_LEFT, TOP_BUTTONS_TOP);
 
 		UtilityFunctions.DrawMessage();
 	}
