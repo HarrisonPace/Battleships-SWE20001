@@ -11,6 +11,11 @@ using SwinGameSDK;
 /// </summary>
 public static class GameController {
 
+	private const int TOP_BUTTONS_TOP = 72;
+	private const int TOP_BUTTONS_HEIGHT = 46;
+	private const int HOME_BUTTON_LEFT = 480;
+	private const int HOME_BUTTON_WIDTH = 51;
+
 	private static BattleShipsGame _theGame;
 	private static Player _human;
 
@@ -19,7 +24,7 @@ public static class GameController {
 	private static Stack<GameState> _state = new Stack<GameState>();
 
 	private static AIOption _aiSetting;
-	
+
 	private static List<Ship> _destroyedShip = new List<Ship>();
 	/// <summary>
 	/// Returns the current state of the game, indicating which screen is
@@ -48,7 +53,7 @@ public static class GameController {
 	public static Player ComputerPlayer {
 		get { return _ai; }
 	}
-	
+
 	public static List<Ship> DestroyedShip {
 		get { return _destroyedShip; }
 	}
@@ -188,7 +193,7 @@ public static class GameController {
 				} else {
 					Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
 				}
-				
+
 				_destroyedShip.Clear();
 				break;
 			case ResultOfAttack.Hit:
@@ -303,7 +308,11 @@ public static class GameController {
 				HighScoreController.HandleHighScoreInput();
 				break;
 		}
-
+		if (SwinGame.MouseClicked(MouseButton.LeftButton)) {
+			if (UtilityFunctions.IsMouseInRectangle(HOME_BUTTON_LEFT, TOP_BUTTONS_TOP, HOME_BUTTON_WIDTH, TOP_BUTTONS_HEIGHT)) {
+				GameController.AddNewState(GameState.ViewingGameMenu);
+			}
+		}
 		UtilityFunctions.UpdateAnimations();
 	}
 
@@ -332,6 +341,7 @@ public static class GameController {
 				break;
 			case GameState.Discovering:
 				DiscoveryController.DrawDiscovery();
+				SwinGame.DrawBitmap(GameResources.GameImage("HomeButton"), HOME_BUTTON_LEFT, TOP_BUTTONS_TOP);
 				break;
 			case GameState.EndingGame:
 				EndingGameController.DrawEndOfGame();
